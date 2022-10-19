@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<!-- 2022-10-19 Wed 12:17 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>À Propos</title>
+<meta name="author" content="Hector Suzanne" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<link rel="icon" href="favicon.ico" />
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">À Propos</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org9f9a595">1. 2020</a>
+<ul>
+<li><a href="#org7a140bd">1.1. Stage de Master</a></li>
+<li><a href="#org662ddd6">1.2. Master STL, troisième semestre</a></li>
+</ul>
+</li>
+<li><a href="#org67d840c">2. 2019</a>
+<ul>
+<li><a href="#org851f30e">2.1. Stage en laboratoire</a></li>
+<li><a href="#org4e744cf">2.2. Master STL, second semestre</a></li>
+<li><a href="#orgb14f163">2.3. Master STL, premier semestre</a></li>
+</ul>
+</li>
+<li><a href="#org8706f72">3. 2018</a></li>
+<li><a href="#org19db8ec">4. 2017</a>
+<ul>
+<li><a href="#org13a1d67">4.1. Stage en laboratoire</a></li>
+<li><a href="#orgda8536f">4.2. L3 informatique de l&rsquo;ENS Cachan</a></li>
+</ul>
+</li>
+<li><a href="#org5113ba4">5. 2015-2016</a></li>
+<li><a href="#org51dbb17">6. Avant</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9f9a595" class="outline-2">
+<h2 id="org9f9a595"><span class="section-number-2">1.</span> 2020</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org7a140bd" class="outline-3">
+<h3 id="org7a140bd"><span class="section-number-3">1.1.</span> Stage de Master</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Stage de M2, au LIP6, encadré par Emmanuel Chailloux, suivant les travaux de son
+dernier doctorant, Steven Varoumas.
+</p>
+
+<p>
+Développement d&rsquo;une analyse statique pour OCaml et une surcouche synchrone,
+<i>OCaLustre</i>, créée par Steven Varoumas pour l&rsquo;informatique embarquée sûre. Le
+but est de pouvoir borner la consommation mémoire des programmes OCaLustre sur
+matériel embarqué avec peu de RAM (de l&rsquo;ordre de 1ko à 64ko).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org662ddd6" class="outline-3">
+<h3 id="org662ddd6"><span class="section-number-3">1.2.</span> Master STL, troisième semestre</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Coloration voulue sur le typage, la compilation
+sûre, donc UEs SVP, FLST, TAS, GRAPA. Mais SVP est annulée pour manque
+d&rsquo;étudiant, donc au final TAS, FLST, PPC, AAGA, GRAPA.
+</p>
+<dl class="org-dl">
+<dt>TAS (1/2)</dt><dd>Typage, avec un point de vue appliqué au langage de
+programmation: Lambda-calcul polymorphique à la ML; sous-typage structurel
+(ML) et nominal (Java); Surcharge et résolution (Java &amp; Haskell); Typage
+graduel. Projet: lecture et présentation de <i>Selective Applicative Functors
+(POPL&rsquo;19)</i>.</dd>
+<dt>TAS (2/2)</dt><dd>Intéprétation abstraite. Abstractions de sémantiques; Calculs
+d&rsquo;approximation de points fixes dans un treillis pour l&rsquo;analyse de boucles;
+Produits réduits &amp; domaines disjonctifs; domaine relationnel polyèdres;
+analyse de pointeurs et tableaux; Application à l&rsquo;embarqué critique. Projet:
+lecture et présentation de <i>tatic analysis of binary code with memory
+indirections using polyhedra</i>.</dd>
+<dt>GRAPA</dt><dd>Groupe de recherche, avec pour thématique cette année l&rsquo;unification
+d&rsquo;ordre supérieure, dans le cadre d&rsquo;une implémentation de λ-prolog en
+<i>Clojure</i>. Travail de recherche en groupe d&rsquo;une dizaine, bibliographie et
+présentation. Algorithme de recherche dans un espace semi-décidable (Huet).
+Programmation en groupe autour de Git partagé, Intégration continue.</dd>
+<dt>FLST</dt><dd>UE du MPRI, prise à Paris-Diderot. Principes et formalismes des
+langages fonctionnels typés modernes. Implémentation de la programmation
+fonctionnelle; méta-théorie des langages fonctionnels typés; Aspects avancés
+des systèmes de types; programmation avec types dépendants en Agda. Projet:
+optimisateur pour le système F explicitement typé.</dd>
+<dt>AAGA</dt><dd>Méthodes pour la compléxité en moyenne et la génération aléatoire.
+Application aux structures arborescentes et l&rsquo;algorithmique probabiliste.
+Introduction à la combinatoire analytique pour l&rsquo;analyse de compléxité en
+moyenne.</dd>
+<dt>PPC</dt><dd>Modèles de la concurrence: réseaux de Petri, CCS, π-calcul, algèbre de
+processus temporels. Modèles de la programmation synchrone, passage de
+message, acteurs.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org67d840c" class="outline-2">
+<h2 id="org67d840c"><span class="section-number-2">2.</span> 2019</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org851f30e" class="outline-3">
+<h3 id="org851f30e"><span class="section-number-3">2.1.</span> Stage en laboratoire</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Stage au LIP6 encadré par Emmanuel Chailloux. Durée: 2mois. Élaboration d&rsquo;un
+système de type pour Cython (Extension de Python permettant l&rsquo;interopérabilité
+avec C) permettant l&rsquo;optimisation des programmes en sortie en déactivant les
+garde-fous dynamiques de la concurrence Python quand une preuve statique
+existe. On s&rsquo;inspire du système de type de Rust garantissant l&rsquo;absence de <i>race
+condition</i>, de RustBelt, une formalisation en Coq de ce système.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4e744cf" class="outline-3">
+<h3 id="org4e744cf"><span class="section-number-3">2.2.</span> Master STL, second semestre</h3>
+<div class="outline-text-3" id="text-2-2">
+<dl class="org-dl">
+<dt>APS</dt><dd>Éléments de sémantique formelle. Typage et sémantique d&rsquo;un langage
+fonctionnel impératif d&rsquo;ordre supérieur. Projet: implémentation d&rsquo;un
+interpréteur/typeur pour ce langage à partir de la sémantique formelle.</dd>
+<dt>CPA</dt><dd>Etude et mise en oeuvre d&rsquo;algorithmes efficaces non-triviaux.
+Algorithmique des grands graphes, algorithmique géométrique, traitement de
+texte automatisé. Implémentation avec des langages modernes.</dd>
+<dt>CA</dt><dd>Compilation des structures de contrôle de haut niveau vers les
+machines virtuelles. Gestion automatique de la mémoire. Passage au code
+natif avec analyse et optimisation du code machine.</dd>
+<dt>CPS</dt><dd>Concepts de l&rsquo;implémentation de logiciels à base de composants.
+Techniques de spécification et de vérifications. Architectures à base de
+composants répartis.</dd>
+<dt>PC2R</dt><dd>Modèles effectifs de concurrence: mémoire
+partagée/distincte/répartie. fils d&rsquo;exécution coopératifs et préemptifs,
+programmation réactive. Modèle client-serveur, déploiement d&rsquo;objets
+répartis.</dd>
+<dt>PSTL</dt><dd>UE de projet en trinôme: &laquo;&nbsp;Une application mobile (ou web) en
+fonctionnel typé sur les pavages à la Escher, visualisation et édition&nbsp;&raquo;.
+Création d&rsquo;une application mobile multi-plateforme en fonctionnel typé, avec
+de l&rsquo;algorithmique non-triviale (groupe de symétries).</dd>
+<dt>Anglais</dt><dd>Anglais pour l&rsquo;informatique et la recherche. Compréhension et
+expression écrite, Compréhension et expression orale. Présentation au choix:
+Nouveaux outils de développement interactifs, avec &laquo;&nbsp;Live Functional
+Programming with Typed Holes&nbsp;&raquo; (POPL&rsquo;19).</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-orgb14f163" class="outline-3">
+<h3 id="orgb14f163"><span class="section-number-3">2.3.</span> Master STL, premier semestre</h3>
+<div class="outline-text-3" id="text-2-3">
+<dl class="org-dl">
+<dt>ALGAV</dt><dd>Structures de données efficaces. Preuves de compléxité. Application
+à la gestion et compression de données massives.</dd>
+<dt>COMPLEX</dt><dd></dd>
+
+<dt>DLP</dt><dd>Conception et implémentation des traits de haut-niveau (genre Python)
+au sein d&rsquo;un interpréteur et compilateur vers C écrit en Java. Introduction
+aux grandes bases de code. Conception guidée par le test.</dd>
+<dt>IL</dt><dd>Introduction au génie logiciel. Patrons de conception en UML. Mise en
+place de procédures de développement.</dd>
+<dt>LRC</dt><dd>Modélisation du raisonnement artificiel, représentation des
+connaissances, formalismes pour la spécification et la vérification.
+Ontologies du web sémantique. Programmation logique avec <i>Prolog</i>.</dd>
+<dt>MLDBA</dt><dd>Modèles et langages des bases de données. SQL classique, SQL3
+orienté objet. Standard XML pour la modélisation et l&rsquo;interrogation de
+données semi-structurées. Langages de requête de graphe.</dd>
+</dl>
+<ul class="org-ul">
+<li>Atelier de dessin</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8706f72" class="outline-2">
+<h2 id="org8706f72"><span class="section-number-2">3.</span> 2018</h2>
+<div class="outline-text-2" id="text-3">
+<dl class="org-dl">
+<dt>Gestion de parc informatique</dt><dd>école CLE</dd>
+<dt>Conseil</dt><dd>agence graphique <i>Au dessus des nuages</i></dd>
+<dt>Aide au dév numérique</dt><dd>Groupe Prévantis</dd>
+<dt>Enseignement/Tutorat</dt><dd>Alice, douée mais en échec scolaire. Maths et
+Physique. Obtention de son bac avec mention.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org19db8ec" class="outline-2">
+<h2 id="org19db8ec"><span class="section-number-2">4.</span> 2017</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org13a1d67" class="outline-3">
+<h3 id="org13a1d67"><span class="section-number-3">4.1.</span> Stage en laboratoire</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Stage au laboratoire de l&rsquo;EPU-Polytech&rsquo;Tours, encadré par Denis Maurel. Durée: 2
+mois. Dans le contexte du traitement automatique de langage naturel, ai
+participé au développement d&rsquo;une extension du système de lemmatisation de langue
+naturelle de la plateforme <i>Unitex</i> pour la transformation automatique de
+dictionnaires.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda8536f" class="outline-3">
+<h3 id="orgda8536f"><span class="section-number-3">4.2.</span> L3 informatique de l&rsquo;ENS Cachan</h3>
+<div class="outline-text-3" id="text-4-2">
+<dl class="org-dl">
+<dt>Algorithmique 1 &amp; 2</dt><dd>Théorie des preuves et analyses d&rsquo;algorithmes pour la
+correction et la compléxité. Applications au algorithmes classiques et
+structures de données arborescentes.</dd>
+<dt>Calculabilité/Compléxité</dt><dd>Machines de Turing; Théorème d&rsquo;incomplétude;
+Problèmes indécidables; Réduction. Classes de compléxité; Inclusions dans les
+classes; NP-complétudes; réduction aux problèmes NP-complets.</dd>
+<dt>λ-calcul</dt><dd></dd>
+
+<dt>Langages formels</dt><dd>Théorie des langages et automates; Hiéacrhie de Chomsky.</dd>
+<dt>Projet Logique COQ</dt><dd>Réduction à SAT de problèmes réels, Preuves formelles
+d&rsquo;algorithmes sur les structures de données élémentaire.</dd>
+<dt>Loqigue</dt><dd></dd>
+
+<dt>Maths Discrètes</dt><dd></dd>
+
+<dt>Progammation 1 &amp; 2</dt><dd></dd>
+
+<dt>Architecture Systèmes</dt><dd>Outils UNIX; Automatisation; Linux; Principe de
+réseaux. Projet: Création depuis les sources d&rsquo;une distribution Linux complète
+(bash + accès au réseau).</dd>
+</dl>
+
+<p>
+Anglais, validé <i>CAE</i>, niveau européen <i>C2</i>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5113ba4" class="outline-2">
+<h2 id="org5113ba4"><span class="section-number-2">5.</span> 2015-2016</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+MPSI/MP*, Lycée Descartes, Tours
+</p>
+<dl class="org-dl">
+<dt>Maths</dt><dd>Analyse réelle et vectorielle; équations différencielles linéaires;
+algèbre générale et linéaire; théorie des groupes; dénombrabilité; théorie de
+la mesure; statistiques et probabilités</dd>
+<dt>Physique</dt><dd>Mécanique newtonienne; Electro-magnétisme; Relativité restreinte;
+Thermodynamique; Chimie élémentaire; Thermo-chimie; Électronique.</dd>
+<dt>Informatique</dt><dd>Programmation de base; Algorithmique; Simulation physique;
+programmation fonctionnelle.</dd>
+<dt>TIPE</dt><dd>Développement d&rsquo;un système d&rsquo;algèbre sur les corps finis dans un style
+purement fonctionnel en Haskell, implémentation du code correcteur de
+Reed-Solomon, étude de l&rsquo;application au stockage sûr de Big Data chez
+Facebook.</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-org51dbb17" class="outline-2">
+<h2 id="org51dbb17"><span class="section-number-2">6.</span> Avant</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>Bac scientifique</li>
+<li><i>Tournoi Français des Jeunes Mathématiciens et Mathématiciennes</i></li>
+<li>Apprentissage de la programmation: C, Python, Haskell, Ocaml</li>
+<li>Electronique de base</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Auteur: Hector Suzanne</p>
+<p class="date">Created: 2022-10-19 Wed 12:17</p>
+</div>
+</body>
+</html>

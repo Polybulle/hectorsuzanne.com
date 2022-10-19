@@ -1,0 +1,35 @@
+body {
+  margin: auto auto;
+  max-width: 40em;
+  background-color: #f4f4f4;
+  line-height: 1.3;
+  padding: 2em;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+#table-of-contents h2 {
+display: none;
+}
+
+#table-of-contents ul {
+list-style: none;
+text-align: center;
+}
+
+#table-of-contents li {
+display: inline;
+padding: 0.5em;
+}
+
+
+h1 { font-size: 34pt; }
+h2 { font-size: 24pt; }
+h1, h2, h3, h4 {
+  color: #011111;
+  font-family: "Helvetica", "Arial", sans-serif;
+}
+h2:before {
+content: url("seal.svg");
+padding: 0.2em;
+vertical-align: middle;
+}

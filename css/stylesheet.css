@@ -1,0 +1,47 @@
+body {
+  margin: auto auto;
+  max-width: 40em;
+  background-color: #fdf6e3;
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.3;
+  padding: 4em 1em;
+}
+
+h2 {
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+h1,
+h2,
+strong,
+body {
+  color: #002b36;
+}
+
+/*code,*/
+pre,
+blockquote {
+  background: #eee8d5;
+  padding: 2px 4px;
+  vertical-align: text-bottom;
+}
+
+pre,
+blockquote {
+  border-left: 2px solid #00394d;
+
+}
+
+a {
+  color: #667f9e;
+}
+
+code,
+pre {
+  color: #002330;
+}
+
+b {
+  font-family: "STIXGeneral", "Times New Roman", Times, serif;
+}

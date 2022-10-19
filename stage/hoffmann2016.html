@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes de Lectures: Towards Automatic Resource Bound Analysis for OCaml</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Notes de Lectures: Towards Automatic Resource Bound Analysis for OCaml</h1>
+<div id="table-of-contents">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbd45aff">Introduction</a>
+<ul>
+<li><a href="#orgd66302f">Premier exemple</a></li>
+</ul>
+</li>
+<li><a href="#org71b0e8a">Analyse de la programmation fonctionnelle</a>
+<ul>
+<li><a href="#org3a6610a">Fermetures et curryfication</a></li>
+<li><a href="#org1ce1dd1">Gestion de l&rsquo;ordre supérieur</a></li>
+<li><a href="#orged39d20">Effets de bord</a></li>
+</ul>
+</li>
+<li><a href="#org2222241">Core RAML, première sémantique</a>
+<ul>
+<li><a href="#org761957e">Syntaxe</a></li>
+<li><a href="#org2cc8f64">Définitions sémantique</a></li>
+<li><a href="#orgfe7f258">Sémantique à grand pas</a></li>
+</ul>
+</li>
+<li><a href="#org44e12b0">Core RAML, sémantique à pile</a></li>
+<li><a href="#orge5f9655">Limites</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-orgbd45aff" class="outline-2">
+<h2 id="orgbd45aff">Introduction</h2>
+<div class="outline-text-2" id="text-orgbd45aff">
+<p>
+On introduit une analyse statique de ressources pour les programmes OCaml
+<i>fonctionnels</i>, <i>d&rsquo;ordre supérieur</i>, <i>avec polymorphisme</i> et <i>types
+utilisateurs</i>. On obtient en résultat des polynômes multivariables décrivant
+l&rsquo;usage de ressources tel que le temps d&rsquo;exécution au pire (WCET), l&rsquo;occupation
+mémoire, la consommation d&rsquo;énergie ou encore le nombre d&rsquo;appel à une API. Cette
+analyse utilise <i>AARA : Automatic Amortized Resource Analysis</i>, un nouveau
+système de type et une nouvelle sémantique de la machine virtuelle <i>ZINC</i>
+d&rsquo;OCaml. On peut trouver des bornes asymptotique fortes pour des programmes
+réels, comme les utilitaires de la bibliothèque standard sur les listes,
+l&rsquo;algorithme de Dijkstra, ou un client pour Amazon DynamoDB, avec à chaque fois
+les métriques pertinentes.
+</p>
+</div>
+
+<div id="outline-container-orgd66302f" class="outline-3">
+<h3 id="orgd66302f">Premier exemple</h3>
+<div class="outline-text-3" id="text-orgd66302f">
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #000000; font-weight: bold;">type</span> <span style="color: #9a7500;">('a, 'b) ablist</span> =
+| <span style="color: #2a2a2a; background-color: #eeeeee;">Acons</span> <span style="color: #3b6ea8;">of</span> 'a * ('a, 'b) list
+| <span style="color: #2a2a2a; background-color: #eeeeee;">Bcons</span> <span style="color: #3b6ea8;">of</span> 'b * ('a, 'b) list
+| <span style="color: #2a2a2a; background-color: #eeeeee;">ABNil</span>
+
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #29838d;">sort_the_as</span> <span style="color: #cb9aad;">the_arg</span> = <span style="color: #3b6ea8;">match</span> ablist <span style="color: #3b6ea8;">with</span>
+| <span style="color: #2a2a2a; background-color: #eeeeee;">Acons</span> (a, tail) -&gt; <span style="color: #2a2a2a; background-color: #eeeeee;">Acons</span> (quicksort a, sort_the_as tail)
+| <span style="color: #2a2a2a; background-color: #eeeeee;">Bcons</span> (b, tail) -&gt; <span style="color: #2a2a2a; background-color: #eeeeee;">Bcons</span> (b          , sort_the_as tail)
+| <span style="color: #2a2a2a; background-color: #eeeeee;">ABNil</span> -&gt; ABNil
+</pre>
+</div>
+
+<p>
+Sur ce fragment de véritable code OCaml, RAML infère comme métriques pertinentes
+</p>
+<ul class="org-ul">
+<li><code>N</code>, le nombre de noeuds Acons de <code>the_arg</code>,</li>
+<li><code>K</code>, le maximum des tailles des arguments de type <code>'a</code> des Acons, et</li>
+<li><code>L = N+K</code> la taille de <code>the_arg</code>,</li>
+</ul>
+<p>
+et assigne le coût mémoire <code>13*K*N^2 + 22*K*N + 13*L + 15*N + 11</code> à la fonction
+analysée, en terme d&rsquo;étape d&rsquo;évaluation dans la sémantique à grand pas de RAML.
+</p>
+
+<p>
+Pour ce faire, on extrait un AST typé du compilateur OCaml, puis on infère de
+nouveaux types contenant des information de potentiel pour chaque expression. A
+partir d&rsquo;une déclaration <code>t : T</code>, on obtient une autre définition <code>t : (T';
+&lt;q1...qn&gt;))</code> ou <code>T'</code> est proche de <code>T</code> (on y précise les applications
+partielle/totales des fonctions aux sites d&rsquo;appels), et les <code>qi</code> sont des
+coefficients permettant de définir un potentiel <i>φ(t) = Σ q<sub>i</sub>*p<sub>i</sub>(t)</i>. Les
+polynômes <i>p<sub>i</sub></i> sont définis pour chaque constructeurs du type <code>T</code>. La sémantique
+du langage hôte induit des contraintes linéaires entre les potentiels. Elles
+sont résolues par un solveur de programmation linéaire externe lors d&rsquo;un
+parcours de l&rsquo;AST, comme on infère les types dans un programme en produisant et
+résolvant des contraintes d&rsquo;unification.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org71b0e8a" class="outline-2">
+<h2 id="org71b0e8a">Analyse de la programmation fonctionnelle</h2>
+<div class="outline-text-2" id="text-org71b0e8a">
+<p>
+On a distingué trois principales difficultés à l&rsquo;analyse de ressource:
+l&rsquo;application partielle, les arguments d&rsquo;ordre supérieurs, et les effets de
+bords
+</p>
+</div>
+
+<div id="outline-container-org3a6610a" class="outline-3">
+<h3 id="org3a6610a">Fermetures et curryfication</h3>
+<div class="outline-text-3" id="text-org3a6610a">
+<p>
+On prend comme exemple <code>val append : 'a list -&gt; 'a list -&gt; 'a list</code> de la
+bibliothèque standard. L&rsquo;appel <code>let foo = append xs</code> termine en temps constant,
+et ne fait que créer une fermeture. Par contre, l&rsquo;appel <code>foo ys</code> renvoie la
+liste <code>xs @ ys</code> en temps et espace <i>O(xs)</i>. Donc, l&rsquo;usage de ressource de <code>foo</code>
+ne dépend pas de son argument <code>ys</code>, mais est linéaire en la taille de la valeur
+capturée <code>xs</code>. Hélas, il n&rsquo;est pas suffisant de dé-curryfier <code>append</code> pour
+retomber sur un cas plus simple: Un appel à une version dé-curryfiée d&rsquo;<code>append</code>
+nécessite d&rsquo;allouer une paire pour les deux arguments, alors que dans le cas
+normal, on produit une fermeture si l&rsquo;application est partielle, et on appelle
+<code>append</code> sans allocation si les deux arguments sont fournis.
+</p>
+
+<p>
+On résout ce problème en raffinant les types des fonctions sur leurs sites
+d&rsquo;appels. Les applications partielles peuvent être saturées par eta-expansion,
+et on change le type de la fonction de <code>a1 -&gt; ... -&gt; an -&gt; t</code> en <code>[a1 ... an] -&gt;
+t</code>, où l&rsquo;annotation <code>[...]</code> indique la saturation de l&rsquo;appel. L&rsquo;analyse peut
+alors rendre compte de l&rsquo;usage correct des ressource pour le second type. Hélas,
+elle est bien plus complexe si les valeurs capturées dans les fermetures
+interviennent dans le calcul de complexité. L&rsquo;analyse est donc limitée aux
+appels annotés précédemment. De cet exemple ressort le critère principal de
+notre analyse:
+</p>
+<blockquote>
+<p>
+<i>La complexité d&rsquo;un appel de fonction ne doit dépendre que de la
+taille de ses arguments.</i>
+</p>
+</blockquote>
+
+<p>
+On reconnaît la possibilité d&rsquo;étendre le système pour gérer les appels
+non-saturés, mais cela aurait un coût important en terme de complexité. On
+pourrait par exemple étendre le raffinement des types avec des types dépendants.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ce1dd1" class="outline-3">
+<h3 id="org1ce1dd1">Gestion de l&rsquo;ordre supérieur</h3>
+<div class="outline-text-3" id="text-org1ce1dd1">
+<p>
+Dans le cas plus simple où on se limite à des estimations linéaires du coût, il
+est possible de calculer la consommation de ressource en présence d&rsquo;arguments
+d&rsquo;ordre supérieur en se ramenant à l&rsquo;ordre un. Mais c&rsquo;est seulement possible
+quand les arguments sont eux-mêmes analysables, et on doit entrelacer le typage
+et la génération de contraintes. On préfère séparer les deux processus.
+</p>
+
+<p>
+On peut néanmoins analyser les fonctionelles en l&rsquo;absence d&rsquo;information sur
+leurs arguments: Il suffit de supposer les coûts qu&rsquo;ils engendrent négligeables.
+L&rsquo;analyse n&rsquo;est alors pas veine: On peut déterminer le coût propre de fonctions
+comme <code>map</code> et <code>fold</code>, et l&rsquo;analyse sert aussi de preuve de terminaison. On peut
+en effet dire qu&rsquo;une fonction d&rsquo;ordre supérieur ayant un coût défini termine si
+et seulement si les appels à ces arguments terminent tous.
+</p>
+
+<p>
+Dans les cas où la terminaison de la fonction dépend de propriétés des arguments
+d&rsquo;ordre supérieur, on ne peut pas conclure dans le cas général. Mais on peut
+reprendre l&rsquo;analyse dans les sites d&rsquo;appels où ces arguments sont connus, comme
+dans le cas suivant:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ocaml"><span style="color: #b1b1b1;">(* </span><span style="color: #b1b1b1;">Impossible de conclure ici </span><span style="color: #b1b1b1;">*)</span>
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #29838d;">iter</span> <span style="color: #cb9aad;">f</span> <span style="color: #cb9aad;">x</span> =
+  <span style="color: #000000; font-weight: bold;">let</span> <span style="color: #cb9aad;">y</span> = f x <span style="color: #000000; font-weight: bold;">in</span>
+  <span style="color: #3b6ea8;">if</span> y = <span style="color: #97365b; font-weight: bold;">0</span>
+  <span style="color: #3b6ea8;">then</span> ()
+  <span style="color: #3b6ea8;">else</span> iter f y
+
+<span style="color: #b1b1b1;">(* </span><span style="color: #b1b1b1;">mais ici on peut sp&#233;cialiser pour une valeur pr&#233;sice de `f`</span><span style="color: #b1b1b1;">*)</span>
+<span style="color: #000000; font-weight: bold;">let</span> <span style="color: #29838d;">foo</span> <span style="color: #cb9aad;">x</span> = iter (<span style="color: #3b6ea8;">fun</span> <span style="color: #cb9aad;">z</span> -&gt; <span style="color: #97365b; font-weight: bold;">0</span>) x
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orged39d20" class="outline-3">
+<h3 id="orged39d20">Effets de bord</h3>
+<div class="outline-text-3" id="text-orged39d20">
+<p>
+L&rsquo;analyse vérifie que le coût du programme est indépendant des valeurs stockées
+dans les états mutables. Dans le cas contraire, on peut peux pas poursuivre. Il
+a été montré que l&rsquo;analyse à base de polynômes peut être étendue avec des
+potentiels pour les états mutables, mais cela est ici hors du champ d&rsquo;étude, qui
+est l&rsquo;analyse sur les programmes fonctionnels. RAML peut néanmoins interagir
+avec l&rsquo;état mutable pour affiner ses résultat. On peut par exemple, effectuer
+une analyse d&rsquo;aliasing sur les références à des fonctions: Si la référence en
+question ne peut prendre qu&rsquo;un nombre fini de valeurs (et qu&rsquo;on peut le
+détecter), alors on peut calculer un coût au pire pour les appels à travers la
+référence. Enfin, on peut étendre l&rsquo;analyse aux programme lançant des exceptions
+en annotant le type de l&rsquo;exception et de ses arguments.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org2222241" class="outline-2">
+<h2 id="org2222241">Core RAML, première sémantique</h2>
+<div class="outline-text-2" id="text-org2222241">
+<p>
+Après simplification de l&rsquo;AST OCaml, on se ramène à un langage simple, où les
+termes sont sous forme <i>let-share-normale</i>: on a remplacé le plus de
+sous-expressions possibles par les variables créées par let ou share (voir
+syntaxe). Pour garantir que le programme transformé rend compte de la
+consommation du programme en entrée, on peut marquer des constructions comme
+<i>gratuites</i> via une meta-syntaxe, qui sont ignorés dans l&rsquo;analyse. On présente
+ici un langage réduit, sans types primitifs comme les tableaux, leurs
+opérations, ou conditionelle.
+</p>
+</div>
+
+<div id="outline-container-org761957e" class="outline-3">
+<h3 id="org761957e">Syntaxe</h3>
+<div class="outline-text-3" id="text-org761957e">
+<ul class="org-ul">
+<li>Les classiques:
+<ul class="org-ul">
+<li>constructeurs, pattern matching</li>
+<li>abstraction, application</li>
+<li>tuples, références</li>
+<li><code>let</code>, <code>let rec</code> de fonctions, variables</li>
+</ul></li>
+<li><code>fail</code>, pour modéliser les exceptions</li>
+<li><code>tick(q ∈ ℚ)</code>, une consommation de ressources</li>
+<li><code>share x as (y,z) in ...</code>, le partage de valeurs</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2cc8f64" class="outline-3">
+<h3 id="org2cc8f64">Définitions sémantique</h3>
+<div class="outline-text-3" id="text-org2cc8f64">
+<p>
+Les valeurs <b>Val</b> sont
+</p>
+<ul class="org-ul">
+<li><b>l</b> la position d&rsquo;une valeur sur le tas,</li>
+<li><b>(l<sub>1</sub>, &#x2026;, l<sub>n</sub>)</b> les tuples de valeur,</li>
+<li><b>(λx.e, V)</b> les fermetures, avec leurs environnements, et</li>
+<li><b>C l</b> les applications de constructeur à une valeur.</li>
+</ul>
+
+<p>
+<b>K ∈ Syn</b> sont les noeuds de syntaxe, <b>S</b> est une pile d&rsquo;arguments, et <b>M : Syn
+× ℕ -&gt; ℚ</b> est une <i>métrique de ressource</i>.
+</p>
+
+<p>
+Le modèle mémoire comporte des variables <b>x ∈ Var</b> des adresses <b>l ∈ Loc</b> et les
+valeurs <b>Val</b>. Les variables indicent un environnement (partiel) <b>V : Var -&gt;
+Loc</b>. Enfin le tas est <b>H : Loc -&gt; Val</b> et comporte un pointeur nul <b>null ∈
+dom(H)</b> tel que <b>H(null) = null</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfe7f258" class="outline-3">
+<h3 id="orgfe7f258">Sémantique à grand pas</h3>
+<div class="outline-text-3" id="text-orgfe7f258">
+<p>
+Le jugement principal
+</p>
+<blockquote>
+<p>
+<b>S,V,H  ⊢<sub>Μ</sub> e ⇓ w | (q,q&rsquo;)</b>
+</p>
+</blockquote>
+<p>
+s&rsquo;entend par:
+</p>
+<ul class="org-ul">
+<li>Selon la métrique de ressource <b>M</b></li>
+<li>dans un environnement <b>V</b>,</li>
+<li>avec une pile S et un tas <b>H</b>,</li>
+<li>l&rsquo;expression <b>e</b> se réduit en <b>w</b>,</li>
+<li>en induisant un coût <b>(q,q&rsquo;)</b>.</li>
+</ul>
+<p>
+En général, on note la consommation <b>(q, 0)</b> par <b>q</b> et <b>(0, -q)</b> par <b>-q</b>.
+</p>
+
+<p>
+Les réductions <b>w</b> sont soit une valeur de retour et un nouvel état <b>(l&rsquo;H&rsquo;)</b>,
+soit un blocage <b>⊥</b>, soit une non-terminaison <b>○</b>.
+</p>
+
+<p>
+Les consommation de ressources sont de la forme <b>(q,q&rsquo;)</b> où <b>q</b> est la &laquo;&nbsp;marée
+haute&nbsp;&raquo;, la quantité maximale de ressource dont on à besoin, et <b>q&rsquo;</b> est la
+quantité de ressource disponible après l&rsquo;évaluation. La consommation est
+paramétrée par la <i>métrique de ressources</i> <b>M</b>, qui est une fonction qui à un
+noeud de la syntaxe <b>k</b> et sa taille <b>n</b> associe le coût propre de la
+construction: <b>M(k,n) = (q,q&rsquo;)</b>.
+</p>
+
+<p>
+Les consommations forment un monoïde avec
+</p>
+<ul class="org-ul">
+<li><b>0 = (0,0)</b></li>
+<li><b>(q,q&rsquo;)·(p,p&rsquo;) =</b>
+<ul class="org-ul">
+<li><b>(q + p - q&rsquo;, p&rsquo;) si q&rsquo; ≤ p</b></li>
+<li><b>(q, p&rsquo; + q&rsquo; - p) si q&rsquo; &gt; p</b></li>
+</ul></li>
+</ul>
+
+<p>
+La composition de deux consommation est alors la consommation de la séquence.
+Dans le cas d&rsquo;une analyse de WCET, les consommation sont <b>(q, 0)</b> car on ne peut
+pas libérer de temps.  On peut alors dénoter la consommation des structures de données,
+par exemple, <b>(e1,e2)</b> a une consommation <b>M(tuple,2)·(q1,q1&rsquo;)·(q2,q2&rsquo;)</b>
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org44e12b0" class="outline-2">
+<h2 id="org44e12b0">Core RAML, sémantique à pile</h2>
+<div class="outline-text-2" id="text-org44e12b0">
+<p>
+<i>TODO</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge5f9655" class="outline-2">
+<h2 id="orge5f9655">Limites</h2>
+<div class="outline-text-2" id="text-orge5f9655">
+<p>
+Ne sont pas inclut dans le langage réduit auquel RAML ramème OCaml:
+</p>
+<ul class="org-ul">
+<li>Les modules, les foncteurs, les enregistrements</li>
+<li>la programmation orienté objet et les structures mutables en général</li>
+<li>le lancement d&rsquo;exception (qui est ignoré)</li>
+<li>le pattern matching imbriqué et les arguments optionnels, car on travaille
+avant qu&rsquo;ils ne soit traduits vers des structures syntaxiques plus simples</li>
+<li>la FFI vers C, pour des raisons évidentes</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

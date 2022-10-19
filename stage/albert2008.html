@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes de lectures: Closed-form Upper Bounds in Static Cost Analysis</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Notes de lectures: Closed-form Upper Bounds in Static Cost Analysis</h1>
+<div id="table-of-contents">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgb1809ab">Introduction</a></li>
+<li><a href="#orgdbb793f">Relations de Coûts</a>
+<ul>
+<li><a href="#org9acb6e9">Obtention</a></li>
+<li><a href="#orgc6cdde3">Syntaxe</a></li>
+<li><a href="#org53fdd5d">Sémantique</a></li>
+<li><a href="#orgca36205">Différences avec les relations de récurrences</a></li>
+</ul>
+</li>
+<li><a href="#org6c0135e">Bornes Supérieures de Forme Fermées des Relations de Coûts</a>
+<ul>
+<li><a href="#org1f3a50d">Bornage du Nombre de Noeuds</a></li>
+<li><a href="#orgdbe5630">Bornage du Coût par Noeud</a></li>
+<li><a href="#orgda8155d">Cas des Algorithmes <i>Diviser-pour-régner</i></a></li>
+</ul>
+</li>
+<li><a href="#org9ecf4db">Mise en Forme de Récurrence Directe des Relations de Coûts</a></li>
+<li><a href="#org154c35a">Incomplétude de l&rsquo;Analyse de Coût</a></li>
+<li><a href="#org8efbb18">Travaux Connexes &amp; Conclusion</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb1809ab" class="outline-2">
+<h2 id="orgb1809ab">Introduction</h2>
+<div class="outline-text-2" id="text-orgb1809ab">
+<p>
+On cherche à borner le coût en une certaine ressource d&rsquo;un programme <i>P</i> sur une
+entrée arbitraire <i>x</i> sans pour autant avoir à déterminer le <i>x</i> qui réalise
+cette borne ou avoir à calculer <i>P(x)</i>. Pour ce faire, on procède avec un
+programme <i>P</i> et un <i>modèle de coût</i> donné. On produit dans un premier temps des
+<i>relations de coûts (CR)</i> pour <i>P</i>. Ces relations décrivent le coût de <i>P</i> selon
+le modèle du calcul en fonction de la <i>taille</i> de son entrée <i>x</i>.
+</p>
+
+<p>
+Les CR sont un formalisme pertinent pour l&rsquo;analyse de coût pour les raisons
+suivantes:
+</p>
+<ul class="org-ul">
+<li>Elles sont <i>agnostiques</i> au langage et modèle de coût utilisés</li>
+<li>Elles couvrent de nombreuses classes de complexités algorithmiques, et sont
+donc <i>polyvalentes</i></li>
+<li>On peut y capturer des notions <i>non-triviales</i> de coûts, même à posteriori en
+changeant le modèle.</li>
+</ul>
+
+<p>
+La dynamique des CR est néanmoins non-triviale: l&rsquo;abstraction des données du
+programme à leurs tailles crée une source de non-déterminisme: par exemple,
+quand on branche selon la valeur d&rsquo;une variable, et que les deux branches n&rsquo;ont
+pas de coût égaux, notre analyse statique se trouve face à une ambiguïté.
+</p>
+
+<p>
+Dans la littérature, on utilise souvent des <i>relations de récurrences</i> à la
+place des relations de coûts. Elle y ressemblent fortement, mais sont
+déterministes. Cela a conduit à essayer de déléguer la recherche de formes
+fermées des relations de coûts par des systèmes experts de calculs symboliques
+(Mapple, Mathematica,etc). Mais, nous le verrons, cette approche n&rsquo;a pas eu le
+succès escompté.
+</p>
+
+<p>
+Notre nouvelle approche, basée sur l&rsquo;analyse statique d&rsquo;une sémantique de des CR
+ à la manière de la programmation logique par contrainte, est la première
+ permettant d&rsquo;obtenir des formes fermées des CR automatiquement pour un grand
+ nombre de programmes impératifs, représentatifs de ceux présent dans le monde
+ réel.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdbb793f" class="outline-2">
+<h2 id="orgdbb793f">Relations de Coûts</h2>
+<div class="outline-text-2" id="text-orgdbb793f">
+</div>
+<div id="outline-container-org9acb6e9" class="outline-3">
+<h3 id="org9acb6e9">Obtention</h3>
+<div class="outline-text-3" id="text-org9acb6e9">
+<p>
+On veut pouvoir inférer, depuis le code source d&rsquo;un programme impératif
+structuré (avec <code>if</code>, <code>while</code>,etc) ou non-structuré (avec <code>goto</code>, <code>jump</code>,etc) les
+relations de tailles qui existent entre les données qu&rsquo;il manipule. On procède
+en trois étapes:
+</p>
+<ol class="org-ol">
+<li>On construit les <i>Control Flow Graph</i> du programme pour rendre les
+récurrences explicites.</li>
+<li>En utilisant l&rsquo;interprétation abstraite, on obtient des approximations des
+<i>relation de tailles</i> entres les différents appels récursifs. Les relations
+obtenues sont généralement linéaires (i.e. on travaille dans les domaine
+abstrait des polyèdres convexes), mais on peut utiliser un autre formalisme à
+condition d&rsquo;avoir un solveur adapté plus bas dans la chaîne de traitement.</li>
+<li>On interprète le programme dans le modèle de coût choisi, afin de générer les
+relations de coûts en elles-mêmes.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgc6cdde3" class="outline-3">
+<h3 id="orgc6cdde3">Syntaxe</h3>
+<div class="outline-text-3" id="text-orgc6cdde3">
+<pre class="example">
+r   ::= ℝ+
+n   ::= ℕ
+v   ::= Ζ
+lin ::= v1*x1 + ... vn*xn
+c   ::= lin &lt; lin | lin ≤ lin | lin = lin
+φ   ::= c+
+
+exp ::= r         | nat(lin)
+      | exp + exp | exp * exp  | exp - r
+      | exp ^ r   | log_{n}(exp) | n{exp}
+      | max( exp+ )
+
+cost ::=  C(x_{1}...x_{n}) = exp + ∑(i=1...n) D_i(y_{i,1}...y_{i,m}) where φ
+CRS  ::= cost+
+</pre>
+
+<p>
+On notera que dans <i>cost</i>, les variables de <i>exp</i> et <i>(y<sub>i,1</sub>&#x2026;y<sub>i,m</sub></i> ne
+sont pas <i>définies</i> grâce à <i>x<sub>1</sub>&#x2026;x<sub>n</sub></i>) mais seulement reliées à elles par
+les contraintes présentes dans <i>φ</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org53fdd5d" class="outline-3">
+<h3 id="org53fdd5d">Sémantique</h3>
+<div class="outline-text-3" id="text-org53fdd5d">
+<p>
+Les <i>Systèmes de récurrences de coûts (CRS)</i> sont définis de manière analogues
+au programmes de programmation logique: les <code>C(x_{1}...x_{n}) = ...</code> sont comme des
+définitions de clauses, et la partie droite de l&rsquo;égalité peut être vue comme une
+disjonction (somme) de contraintes, testables directement ou par récurrence sur
+d&rsquo;autres clauses.
+</p>
+
+<p>
+La sémantique des <i>CRS</i> suit donc celle d&rsquo;un programme en progammation logique,
+définie par des arbres d&rsquo;évaluations. Pour évaluer un <code>C(v_{1}...v_{n})</code>, on procède
+par étapes:
+</p>
+<ol class="org-ol">
+<li>On choisie une des clauses du CRS qui a <code>C</code> en tête.</li>
+<li>on instancie les variables libres de manière à
+satisfaire <code>φ</code>.</li>
+<li>On calcule et accumule <code>exp</code> sous l&rsquo;instanciation précédente</li>
+<li>On itère sur tout les <code>D_{i}</code></li>
+</ol>
+<p>
+Quand on ne peut pas satisfaire <code>φ</code>, on a atteint un échec.
+</p>
+
+<p>
+On définit alors la sémantique d&rsquo;un CRS comme l&rsquo;ensemble de arbres d&rsquo;évaluations
+qu&rsquo;il engendre. Le coût d&rsquo;un arbre est défini par induction, et le coût du CRS
+est l&rsquo;ensemble des coût de ses arbres d&rsquo;évaluation.
+</p>
+
+<p>
+On note <code>Trees(C(v_{1}...v_{n}), S)</code> l&rsquo;ensemble des arbres de l&rsquo;évaluation de
+<code>C(v_{1}...v_{n})</code> dans le CRS <code>S</code>, et <code>Answer(C(v_{1}...v_{n}), S)</code> l&rsquo;ensemble
+des coûts engendrés.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgca36205" class="outline-3">
+<h3 id="orgca36205">Différences avec les relations de récurrences</h3>
+<div class="outline-text-3" id="text-orgca36205">
+<dl class="org-dl">
+<dt>Non-déterminisme</dt><dd>L&rsquo;abstraction des valeurs par leurs tailles rends les CR
+<i>très</i> non-déterministes, même dans les cas ou le programme ne l&rsquo;est pas. Voir
+par exemple la fonction <code>filter</code>, laissée en exercice au lecteur.</dd>
+<dt>Contraintes inexactes</dt><dd>Les arguments des appels récursifs des CR sont liées
+aux arguments à la racine par des relations imprécises. On même peut avoir à
+les tirer dans les ensembles infinis. Au contraire, dans les RR, les arguments
+des appels récursifs sont connus si on connaît les arguments de l&rsquo;appel
+précédent.</dd>
+<dt>Arguments multiples</dt><dd>Dans les RR, l&rsquo;argument décroît selon un ordre bien
+fondé, ce qui garantie la terminaison: on parle de récurrence structurelle.
+Dans les CR, l&rsquo;ordre bien-fondé peut exister sur une <i>relation de taille</i>
+arbitraire.</dd>
+</dl>
+
+<p>
+Les deux premiers cas sont une source importante de non-déterminisme du
+résultat. Les CR ne définissent pas des fonctions mais des relations entre les
+tailles des arguments et la &laquo;&nbsp;taille&nbsp;&raquo; du calcul associé. De plus, les systèmes
+experts de résolutions de récurrence ne peuvent généralement par inférer seuls
+l&rsquo;argument décroissant de manière bien-fondé nécessaire à la résolution de la
+récurrence. Ces systèmes ne sont pas adaptés à la mise en forme close de CR.
+</p>
+
+<p>
+On pourrait essayer de simplifier les CR pour en retirer le non-déterminisme.
+Hélas, des exemples réels simples montrent sans ambiguïté qu&rsquo;il existe des CR
+non-déterministes dont la borne supérieure du coût n&rsquo;est pas modélisable par
+par une CR déterministe.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c0135e" class="outline-2">
+<h2 id="org6c0135e">Bornes Supérieures de Forme Fermées des Relations de Coûts</h2>
+<div class="outline-text-2" id="text-org6c0135e">
+<p>
+Dans une CRS <code>S</code>, on définit les <i>Bornes Supérieures de formes fermées d&rsquo;une CR <code>C</code></i>
+comme une fonction <code>f : Ζ^{n} -&gt; ℝ^{+}</code> telle que:
+</p>
+<ul class="org-ul">
+<li><code>f(x_{1}...x_{n}) = exp</code></li>
+<li><code>∀ v_{1}...v_{n}, ∀r ∈ Answers(C(v_{1}...v_{n}), S), f(v_{1}...v_{n}) ≥ r</code></li>
+</ul>
+
+<p>
+La méthode décrite dans l&rsquo;article construit les bornes sup <code>f</code> en approchant par
+le haut le nombre et le coût individuel des noeuds internes et des feuilles des
+arbres d&rsquo;évaluation de <code>C</code>. Formellement:
+</p>
+
+<p>
+<code>f(x) = internes(x)*cout-interne(x) + feuilles(x)*cout-feuille(x)</code>
+</p>
+
+<p>
+La méthode décrite dans l&rsquo;article construit les bornes sup <code>f</code> en approchant par
+le haut le nombre et le coût individuel des noeuds internes et des feuilles des
+arbres d&rsquo;évaluation de <code>C</code>. Formellement:
+</p>
+
+<p>
+<code>f(x) = internes(x)*cout-interne(x) + feuilles(x)*cout-feuille(x)</code>
+</p>
+</div>
+
+<div id="outline-container-org1f3a50d" class="outline-3">
+<h3 id="org1f3a50d">Bornage du Nombre de Noeuds</h3>
+<div class="outline-text-3" id="text-org1f3a50d">
+<p>
+On borne les valeurs de <code>internes(x)</code> et <code>feuilles(x)</code> en donnant une borne supérieure
+de la hauteur <code>h(x)</code> et du <i>facteur de branchement</i> <code>b</code> des arbres d&rsquo;évaluation.
+Le facteur de branchement est facilement borné par le nombre maximal d&rsquo;appels
+récursifs dans une équation pour <code>C</code>. Il est donc immédiatement calculable.
+</p>
+
+<p>
+On cherche maintenant à borner la hauteur d&rsquo;un arbre d&rsquo;évaluation <code>T ∈
+Trees(C(v_{1}...v_{n}), S)</code>. On applique un pré-traitement à <code>S</code> pour garantir un
+invariant sur <code>T</code>: C&rsquo;est la <i>Mise en forme de récurrence directe</i>: Dans une
+descente dans <code>T</code>, les noeuds successifs représentent des appels imbriqués aux
+relations de coût idoines, étiquetés par les têtes des relations (<code>C</code>, <code>D</code>,
+&#x2026;); La forme de récurrence directe impose que si <code>C</code> apparaît comme un
+descendant de <code>C</code>, alors c&rsquo;est un descendant direct. Ce résultat permet de
+réduire le bornage de <code>h(x)</code> au bornage du nombre d&rsquo;appels successifs à une
+relation de coût <code>C</code>. Une technique de passage en forme de récurrence directe
+est présentée plus loin.
+</p>
+
+<p>
+Le bornage du nombre d&rsquo;appel successifs à une relation de coût ou de récurrence
+à été étudié dans le cadre de l&rsquo;analyse de terminaison. Il en résulte des
+algorithmes d&rsquo;inférence de <i>fonctions de classement</i>, qui associe aux arguments
+des relations un <i>rang</i> dans un ordre bien-fondé. Si une fonction de classement
+<code>f_{C}</code> existe pour une relation de coût <code>C</code>, alors la hauteur de l&rsquo;arbre
+engendré par <code>C(v_{1}...v_{n})</code> est bornée <code>f_{C}(v_{1}...v_{n})</code>. Les fonctions
+de classement que nous utilisons sont linéaires, et inférées par l&rsquo;algorithme
+décrit par Podelski &amp; Rybalchenko dans <i>A complete method for the for synthesis
+of linear ranking functions (VMCAI04)</i>.
+</p>
+
+<p>
+Une fois les bornes de la hauteur est du facteur de branchement établie, il
+suffit d&rsquo;approximer l&rsquo;arbre d&rsquo;évaluation par un arbre complet de hauteur
+<code>h(v_{1}...v_{n})</code> et de facteur <code>b</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdbe5630" class="outline-3">
+<h3 id="orgdbe5630">Bornage du Coût par Noeud</h3>
+<div class="outline-text-3" id="text-orgdbe5630">
+<p>
+Il reste maintenant à obtenir les fonctions <code>cout-interne</code> et <code>cout-feuille</code>.
+Premièrement, on utilise l&rsquo;interprétation abstraite sur la forme de récurrence
+directe de <code>S</code> pour obtenir des approximations sûres des invariants entre les
+appels successifs aux relations de coûts. On remarque alors que les coûts sont
+monotones en leurs composants <code>nat</code>. Il suffit alors de borner ces composants
+en utilisant les invariants calculés plus haut et les arguments à la racine de
+l&rsquo;arbre d&rsquo;évaluation. (Voir la functions <code>ub_exp</code> de l&rsquo;article original pour
+l&rsquo;algorithme exact). Les relations de coûts récursives de <code>S</code> engendrent les
+noeuds internes, et les non-récursives engendrent les feuilles. Les bornes
+supérieures calculées ici forment les fonctions <code>cout-interne</code> et
+<code>cout-feuille</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgda8155d" class="outline-3">
+<h3 id="orgda8155d">Cas des Algorithmes <i>Diviser-pour-régner</i></h3>
+<div class="outline-text-3" id="text-orgda8155d">
+<p>
+Dans les cas des algorithmes diviser-pour-régner, l&rsquo;approximation
+noeud-par-noeud n&rsquo;est pas assez précise. On borne alors le coût d&rsquo;une relation
+de coût <code>C</code> par <code>C^{+}(x) = levels(x)*cout-level(x)</code>. Comme précédemment, on borne
+de nombre de niveau avec la hauteur de l&rsquo;arbre.
+</p>
+
+<p>
+Pour borner le coût par niveau, nous développons une caractérisation des CR
+<i>diviser-pour-régner</i> compatible avec notre analyse, un test automatique
+d&rsquo;appartenance à cette classe de CR, et une méthode pour calculer une borne
+<code>cout-level</code> pour ces CR.
+</p>
+
+<dl class="org-dl">
+<dt>Caractérisation</dt><dd>Une CR est <i>diviser-pour-régner</i> si, pour tout ses arbres
+d&rsquo;évaluation, le coût propre d&rsquo;un niveau de son arbre d&rsquo;évaluation des
+supérieur ou égal au coût propre du niveau directement en dessous</dd>
+<dt>Calcul</dt><dd>On calcule, pour une CR <code>C</code>, les paires <code>(exp, exp')</code> des coûts
+abstraits propres <code>exp</code> de chaque équation la définissant, et de la somme
+<code>exp'</code> des coût abstraits propres de leurs enfants respectifs. Pour
+prouver que <code>C</code> est diviser-pour-régner, il suffit de prouver que pour tout
+assignement satisfaisant les contraintes locales de ces noeuds, le coût de <code>C</code>
+est au moins égal au coût total de ces enfants.</dd>
+<dt>Bornage</dt><dd>On borne alors le coût d&rsquo;un niveau par le coût de la racine, qui
+est le niveau de coût maximal. L&rsquo;algorithme de calcul est le même que pour le
+calcul de <code>cout-interne</code>.</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9ecf4db" class="outline-2">
+<h2 id="org9ecf4db">Mise en Forme de Récurrence Directe des Relations de Coûts</h2>
+<div class="outline-text-2" id="text-org9ecf4db">
+<p>
+On effectue une analyse de composantes fortement connexes dans les CRS, . Il y a
+un lien entre <code>C</code> et <code>D</code> si <code>D</code> intervient à droite dans une équation
+définissant <code>C</code>. Ensuite, le cas échéant, on inline selon ces composantes pour
+rendre toutes les définitions récursives <i>directement</i> récursives.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org154c35a" class="outline-2">
+<h2 id="org154c35a">Incomplétude de l&rsquo;Analyse de Coût</h2>
+<div class="outline-text-2" id="text-org154c35a">
+<p>
+Le problème de l&rsquo;arrêt se réduit à un calcul de coût dans un modèle de temps.
+Donc notre analyse sera forcément incomplète. Mais même quand un programme admet un
+coût fini dans le modèle considéré, notre analyse comporte des sources de pertes
+de précision:
+</p>
+<ul class="org-ul">
+<li>La transformation du programme en système de relations de coût utilise des
+techniques d&rsquo;interprétation abstraites qui donnent des résultats approximatifs
+sur l&rsquo;aliasing ou les relations de tailles. On notera que certain de ces
+problèmes sont aussi indécidables.</li>
+<li>L&rsquo;obtention de bornes supérieures pour les CRS est aussi indécidable, même
+pour des version appauvris des CR. On distingue les pertes de précisions
+suivantes dans l&rsquo;analyse:
+<ul class="org-ul">
+<li>La mise en forme de récurrence directe n&rsquo;est pas systématiquement faisable,
+notamment dans le cas de définition mutuellement récursives.</li>
+<li>Certaines CR n&rsquo;ont pas de fonction de classement linéaires. On pourrait
+étendre nos fonctions de classement à des classes plus expressives, mais le
+besoin ne s&rsquo;est pas fait ressentir en pratique.</li>
+<li>Les invariants recherchés lors du bornage du coût par noeud peuvent ne pas
+être linéaires. Pour intégrer des classes d&rsquo;invariants plus intéressantes,
+il conviendrait d&rsquo;adapter la procédure de maximisation.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8efbb18" class="outline-2">
+<h2 id="org8efbb18">Travaux Connexes &amp; Conclusion</h2>
+<div class="outline-text-2" id="text-org8efbb18">
+<p>
+Dès le système <i>METRIC</i> de Wegbriet, on cherche à obtenir des CR à partir de
+programme. Mais <i>METRIC</i> se limite aux RR, qui sont déterministes, et déjà, les
+solutions exactes sous formes fermées sont hors de portée. On se contente alors de
+bornes supérieures. On retrouve ensuite les travaux de Métayer avec <i>ACE</i>, de
+Rosenthal avec l&rsquo;interprétation abstraite, de Walder avec l&rsquo;analyse de rigueur
+au service de l&rsquo;analyse de ressources, et Sands et ses théories d&rsquo;équivalence de
+coûts. Notre contribution consiste à considérer des relations (1) non-déterministes,
+(2) augmentées de contraintes de tailles sur leurs arguments plus large que la
+simple égalité définitionnelle.
+</p>
+
+<p>
+On distingue deux classes de système d&rsquo;inférence de coût par CR. Les systèmes
+<b>algébriques</b> sont basés sur les nombreux travaux sur la résolution de relations
+de récurrences, soit en implémentant un solveur limité en tant que composant de
+l&rsquo;analyseur, soit en déléguant la résolution à un <i>Computer Algebra System</i>. On
+citera <i>Mathematica, Mapple, Maxima</i>&#x2026;
+</p>
+
+<p>
+Les systèmes <b>transformationels</b>, eux, représentent les CR comme des programmes
+fonctionnels, et la mise en forme close correspond à une réécriture du programme
+de base augmenté d&rsquo;une notion de consommation de ressource. <i>ACE</i> fût le premier
+de ces systèmes, basé sur une grande quantité de règles de réécriture manuelles.
+Depuis, des avancées ont permis de trouver des bornes sous forme close pour
+certaines classes de programmes (cf. Rosenthal FPCA&rsquo;89).
+</p>
+
+<p>
+Les deux approches souffrent de problèmes en cas de non-déterminisme des CR, ce
+qui est assez courant dans le monde réel, et les résultats obtenus sont rarement
+utiles s&rsquo;il sont trop coûteux à obtenir ou trop algébriquement complexes: que
+faire d&rsquo;un coût de 5*sqrt(5)*(1-sqrt(5))<sup>(x+1)</sup> - 5*sqrt(5)*(1+sqrt(5))<sup>(x+1)</sup> +
+&#x2026; ? Au contraire, l&rsquo;approche décrite dans cette article produit des résultats
+corrects et simples même en cas de non-déterminisme, mais donc plus
+approximatifs.
+</p>
+
+<p>
+On note l&rsquo;existence de <i>PURRS</i>, qui ressemble à notre travail, mais avec
+uniquement des CR déterministes, et des travaux de Marion&amp;al. sur les bornes
+polynomiales des tailles de piles pour les programmes fonctionnels.
+</p>
+
+<p>
+Notre travail mets en lumière la pertinence des CR comme <i>langage cible</i> des
+analyses de coûts pour une analyse agnostique du langage source. Nous avons
+étendu notre travail à des CR prenant en compte les phénomènes de libération
+mémoire par un ramasse-miette, et donc le bornage de tas.
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes de lecture: Compositional Certified Resource Bounds</title>
+<meta name="generator" content="Org mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/stylesheet.css" />
+<script type="text/javascript">
+// @license magnet:?xt=urn:btih:1f739d935676111cfff4b4693e3816e664797050&amp;dn=gpl-3.0.txt GPL-v3-or-Later
+<!--/*--><![CDATA[/*><!--*/
+     function CodeHighlightOn(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(null != target) {
+         elem.cacheClassElem = elem.className;
+         elem.cacheClassTarget = target.className;
+         target.className = "code-highlighted";
+         elem.className   = "code-highlighted";
+       }
+     }
+     function CodeHighlightOff(elem, id)
+     {
+       var target = document.getElementById(id);
+       if(elem.cacheClassElem)
+         elem.className = elem.cacheClassElem;
+       if(elem.cacheClassTarget)
+         target.className = elem.cacheClassTarget;
+     }
+    /*]]>*///-->
+// @license-end
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Notes de lecture: Compositional Certified Resource Bounds</h1>
+<div id="table-of-contents">
+<h2>Table des matières</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga6d15c8">Introduction</a>
+<ul>
+<li><a href="#org87849ca">Motivation</a></li>
+<li><a href="#orgf7cb41a">Analyses &laquo;&nbsp;impératives&nbsp;&raquo;</a></li>
+<li><a href="#org96b4559">Analyses &laquo;&nbsp;fonctionnelles&nbsp;&raquo;</a></li>
+<li><a href="#org7fd4e4e">Contribution</a></li>
+</ul>
+</li>
+<li><a href="#orgd0b5aee">Méthode du potentiel</a>
+<ul>
+<li><a href="#org247a817">Analyse quantitative</a></li>
+<li><a href="#org3113c58">Abstraction du programme</a></li>
+<li><a href="#orgb48c64d">Exemples juteux</a></li>
+<li><a href="#org3c00b14">Potentiels linéaires</a></li>
+</ul>
+</li>
+<li><a href="#orgaff3944">Système de type</a>
+<ul>
+<li><a href="#orgcc0972f">Jugements de typage</a></li>
+<li><a href="#org5d35d25">Système de type</a></li>
+</ul>
+</li>
+<li><a href="#org6b93b8b">Inférence automatisée par programmation linéaire</a></li>
+<li><a href="#orgad85cf6">Contexte logique et interaction utilisateur</a></li>
+<li><a href="#org5bab9a5">Relation à l&rsquo;état de l&rsquo;art</a></li>
+</ul>
+</div>
+</div>
+<p>
+Cet article introduit l&rsquo;analyse/C<sup>4</sup>B/ pour la dérivation de bornes aux-pire-cas
+de consommation de ressource des programmes <i>C</i>. Par rapport à l&rsquo;état de l&rsquo;art
+de l&rsquo;époque (2015), elle est <i>composable</i>, <i>interactive</i>, <i>certifiante</i>, et
+<i>efficace à l&rsquo;échelle</i>. Les travaux présentés ici serviront de base pour la
+thèse de Carbonneaux.
+</p>
+
+<div id="outline-container-orga6d15c8" class="outline-2">
+<h2 id="orga6d15c8">Introduction</h2>
+<div class="outline-text-2" id="text-orga6d15c8">
+</div>
+<div id="outline-container-org87849ca" class="outline-3">
+<h3 id="org87849ca">Motivation</h3>
+<div class="outline-text-3" id="text-org87849ca">
+<p>
+<i>Voir l&rsquo;abstract de <a href="carbonneaux2018.html">carbonneaux2018.html</a></i>.
+</p>
+
+<p>
+Au delà des avantages familiers de l&rsquo;analyse de ressource les programmes
+exécutés sur des plate-formes non-fiables doivent pouvoir bénéficier de
+garanties statistiques sur leur réussite. Si l&rsquo;opération matérielle <i>P</i> échoue
+avec probabilité <i>p</i>, une boucle contenant <i>P</i> a une change d&rsquo;échec d&rsquo;au moins
+<i>p<sup>k</sup></i>, avec <i>k</i> une borne du nombre de tours. Obtenir des informations statiques
+fines sur l&rsquo;exécution du programme affine donc les informations sur la confiance
+à accorder aux systèmes non-fiables.
+</p>
+
+<p>
+Enfin, l&rsquo;interaction avec l&rsquo;utilisateur est un espace des possibles: Les
+analyses de ressources considérées sont consistantes, donc incomplètes. Il est
+alors pertinent de permettre à un être humain de donner les dernières
+informations permettant à l&rsquo;analyse de conclure. Notons bien: si l&rsquo;interaction
+veut être compatible avec la génération de certificats, il faut automatiquement
+garantir que les &laquo;&nbsp;indices&nbsp;&raquo; fournis par l&rsquo;humain soient en suite re-dérivables
+par le système d&rsquo;analyse: l&rsquo;humain donne des coupures, pas des axiomes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf7cb41a" class="outline-3">
+<h3 id="orgf7cb41a">Analyses &laquo;&nbsp;impératives&nbsp;&raquo;</h3>
+<div class="outline-text-3" id="text-orgf7cb41a">
+<p>
+Les outils d&rsquo;analyse statique de ressources forment deux grandes familles, que
+l&rsquo;on nommera <i>impératives</i> et <i>fonctionnelles</i>, par abus. Les analyses
+<i>impératives</i> permettent d&rsquo;obtenir des bornes très fines sur des programmes
+impératifs structurés entiers, mais elles composent relativement mal. Il est
+délicat d&rsquo;abstraire une procédure à ces appelants, ou encore d&rsquo;analyser une
+séquence de boucles sans avoir à calculer les pre-<i>post- conditions
+arithmétiques entre elles. Et c&rsquo;est /beaucoup</i> plus facile à dire qu&rsquo;à faire.
+</p>
+
+<p>
+Les travaux de cette branche de l&rsquo;analyse statique automatique de ressource ont
+produits des outils comme <i>SPEED</i>, <i>PUBS</i>, <i>LOOPUS</i>, <i>Rank</i> et <i>KoAT</i> (voir
+<a href="carbonneaux2018.html">carbonneaux2018.html</a>). Elles sont basées sur les <i>fonctions de classement</i>
+et les <i>registres virtuels</i>, qui sont une source majeurs de non-composition.
+L&rsquo;inlining est donc de mise, et avec lui la redondance, et donc l&rsquo;absence de
+passage à l&rsquo;échelle.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org96b4559" class="outline-3">
+<h3 id="org96b4559">Analyses &laquo;&nbsp;fonctionnelles&nbsp;&raquo;</h3>
+<div class="outline-text-3" id="text-org96b4559">
+<p>
+La seconde forme d&rsquo;analyse est basée sur l&rsquo;analyse amortie (méthode du
+potentiel) et les systèmes de types. Les invariants de classes en OOP, et ceux
+des structures de données dans la logique de séparation peuvent être vues comme
+des types dans des systèmes pertinent pour l&rsquo;analyse de ressource.
+</p>
+
+<p>
+Les analyses <i>fonctionnelles</i> sont elles hautement composables, et peuvent
+fonctionner directement sur la syntaxe: on parle d&rsquo;analyse dirigée par les
+types. Mais elles reposent sur l&rsquo;obtention de décroissance sur un ordre
+bien-fondé, qui peut souvent leurs échapper. Par exemple, dans l&rsquo;itération
+<code>for(i:=n; i++; i&lt;m)</code>, la décroissance est sur l&rsquo;expression linéaire <code>m-i</code>. Les
+designs patterns impératifs courants comme le flux de contrôle non-linéaire ou
+la mutation ont formé jusqu&rsquo;à peut des obstacles insurmontables aux analyses
+<i>fonctionnelles</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7fd4e4e" class="outline-3">
+<h3 id="org7fd4e4e">Contribution</h3>
+<div class="outline-text-3" id="text-org7fd4e4e">
+<p>
+C<sup>4</sup>B est la première analyse <i>semi-automatique</i> de ressource. Nous avons
+adapté les méthodes à potentiels pour inférer l&rsquo;usage de ressource de programmes
+C comprenant, entre autres, les structures suivantes:
+</p>
+<ul class="org-ul">
+<li>les fonctions mutuellement récursives;</li>
+<li>les boucles en séquence;</li>
+<li>les boucles imbriqués partageant des indices;</li>
+<li>la libération mémoire dynamique.</li>
+</ul>
+<p>
+Techniquement, l&rsquo;analyse porte sur <i>Clight</i>, la première représentation
+intermédiaire de <i>CompCert</i>. C&rsquo;est un sous-C avec une seule structure de boucle,
+et sans effets de bords dans les expressions.
+</p>
+
+<p>
+Notre système est basé sur une logique à la Hoare portant sur des combinaisons
+de variables. Il est le premier à gérer les bornes dépendants de variables
+<code>signed</code> et de différences entre variables. Il permet la composition d&rsquo;analyse,
+notamment en générant des abstractions de ressources pour les fonctions, et
+produit des certificats pour les bornes inférées vérifiables en temps linéaire.
+</p>
+
+<p>
+Les bornes sont produites en réduisant les relations linéaire et amorties
+non-linéaires entre les variables à un problème de programmation linéaire
+classique, une nouveauté. Notre analyse a été prouvée cohérence par rapport à
+une sémantique paramétrique de coût de C, qui peut être modifiée à posteriori
+(fonction <code>tick(n)</code>).
+</p>
+
+<p>
+Nos avons testé C<sup>4</sup>B sur plus de 2900 lignes de code C et l&rsquo;avons comparé dans
+un cadre expérimental avec d&rsquo;autre analyseurs de ressource existants. Le
+benchmark <i>cBench</i> à servi de banc de test, augmenté de plusieurs extraits de
+projets open source et libres ayant démontrés leurs résistance à l&rsquo;analyse
+statique. Il en ressort, avec les précautions d&rsquo;usage, que C<sup>4</sup>B est le seul
+capable de d&rsquo;inférer à la fois des bornes globales sur des programmes de grandes
+tailles et des bornes locales sur des flots de contrôles complexes.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd0b5aee" class="outline-2">
+<h2 id="orgd0b5aee">Méthode du potentiel</h2>
+<div class="outline-text-2" id="text-orgd0b5aee">
+</div>
+<div id="outline-container-org247a817" class="outline-3">
+<h3 id="org247a817">Analyse quantitative</h3>
+<div class="outline-text-3" id="text-org247a817">
+<p>
+On commence avec une <i>sémantique opérationnelle</i> à grands pas d&rsquo;un langage
+impératif idéal: un programme <b>S</b> munit d&rsquo;un ensemble d&rsquo;état initial <b>𝕊</b> et d&rsquo;un
+état initial <b>σ</b>, s&rsquo;exécute avec un coût <b>n</b> et produit un état final <b>σ&rsquo;</b> et on
+note cela <b>(S,σ) ⇓n σ&rsquo;</b>. La méthode du potentiel consiste à définir une fonction
+<b>Φ</b> des états vers <b>ℚ<sup>+</sup></b> et de prouver la
+</p>
+
+
+<blockquote>
+<p>
+<i>Propriété des potentiels</i>: <br />
+Si <b>Φ(σ) ≥ n</b>, alors <b>(S, σ)  n σ&rsquo;</b> pour un certain <b>σ&rsquo;</b>.
+</p>
+</blockquote>
+
+<p>
+<b>Φ(σ)</b> est alors une borne statique acceptable de la consommation de
+ressource. On peut ensuite définir des triplés à la Hoare pour les fonctions de
+potentiels:
+</p>
+
+<blockquote>
+<p>
+<b>{Φ} S {Φ&rsquo;}</b> si et seulement si, pour tout <b>σ</b>, <b>σ&rsquo;</b>, <b>n</b>: <br />
+<b>(S, σ) ⇓n σ&rsquo;</b> implique <b>Φ(σ) ≥ n + Φ&rsquo;(σ&rsquo;)</b>
+</p>
+</blockquote>
+
+
+<p>
+On retrouve alors une règle classique de la logique de Hoare, mais <b>Φ&rsquo;</b> n&rsquo;est
+définie qu&rsquo;avec l&rsquo;aide de <b>S</b>, un avantage clair.
+</p>
+<blockquote>
+<p>
+<b>{Φ} S {Φ&rsquo;}</b> &emsp; &emsp; &emsp; <b>{Φ&rsquo;} S&rsquo; {Φ&rsquo;&rsquo;}</b> <br />
+<b>------------------------------------</b> <br />
+&emsp; &emsp; &emsp; &emsp; <b>{Φ} S;S&rsquo; {Φ&rsquo;&rsquo;}</b>
+</p>
+</blockquote>
+
+
+<p>
+Enfin, pour s&rsquo;éviter une lourdeur syntaxique, nous notons <b>‹x,y›</b> la valeur
+<b>max(y-x,0)</b> (que le papier note <b>|[x,y]|</b>, la norme positive de l&rsquo;intervalle
+<b>[x,y]</b>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3113c58" class="outline-3">
+<h3 id="org3113c58">Abstraction du programme</h3>
+<div class="outline-text-3" id="text-org3113c58">
+<p>
+Les analyses quantitatives ne suffisent pas à raisonner sur les programmes. Il
+faut maintenir <i>à minima</i> un état abstrait justifiant les opérations sur les
+fonctions de potentiels. Notre outil représente cette état comme un contexte
+logique, extrait d&rsquo;une interprétation abstraite. Le domaine de choix est celui
+des polyèdres, avec accélération importante des points fixes: des invariants
+locaux faibles sont empiriquement suffisant.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb48c64d" class="outline-3">
+<h3 id="orgb48c64d">Exemples juteux</h3>
+<div class="outline-text-3" id="text-orgb48c64d">
+<p>
+Je conseille d&rsquo;essayer de trouver, à la main, le coût de ces fragments de code
+avant de lire la réponse exacte, inférée correctement par C<sup>4</sup>B. On passe les
+exemples sur les fonctions mutuellement récursives et les itérations tordues.
+</p>
+</div>
+
+<div id="outline-container-org758bd66" class="outline-4">
+<h4 id="org758bd66">Quelques itérations classiques:</h4>
+<div class="outline-text-4" id="text-org758bd66">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #b1b1b1;">/* </span><span style="color: #b1b1b1;">(1)</span><span style="color: #b1b1b1;"> */</span> <span style="color: #3b6ea8;">while</span><span style="color: #3b6ea8;">(</span>x &lt; y<span style="color: #3b6ea8;">)</span> <span style="color: #3b6ea8;">{</span>x++; tick<span style="color: #97365b;">(</span><span style="color: #97365b; font-weight: bold;">1</span><span style="color: #97365b;">)</span><span style="color: #3b6ea8;">}</span>
+<span style="color: #b1b1b1;">/* </span><span style="color: #b1b1b1;">(2)</span><span style="color: #b1b1b1;"> */</span> <span style="color: #3b6ea8;">while</span><span style="color: #3b6ea8;">(</span>x+K &lt;= y<span style="color: #3b6ea8;">)</span> <span style="color: #3b6ea8;">{</span>x += K; tick<span style="color: #97365b;">(</span>T<span style="color: #97365b;">)</span><span style="color: #3b6ea8;">}</span>     <span style="color: #b1b1b1;">// </span><span style="color: #b1b1b1;">K et T sont des constantes</span>
+<span style="color: #b1b1b1;">/* </span><span style="color: #b1b1b1;">(3)</span><span style="color: #b1b1b1;"> */</span> <span style="color: #3b6ea8;">while</span><span style="color: #3b6ea8;">(</span>x &lt; y<span style="color: #3b6ea8;">)</span> <span style="color: #3b6ea8;">{</span>tick<span style="color: #97365b;">(</span>-<span style="color: #97365b; font-weight: bold;">1</span><span style="color: #97365b;">)</span>; x++; tick<span style="color: #97365b;">(</span><span style="color: #97365b; font-weight: bold;">1</span><span style="color: #97365b;">)</span><span style="color: #3b6ea8;">}</span>
+</pre>
+</div>
+
+<p>
+Parmi les outils testés, tous bornent correctement le coût <b>‹x,y›</b> pour <i>(1)</i>,
+mais seul C<sup>4</sup>B infère la borne exacte <b>(T/K)‹x,y›</b> pour <i>(2)</i>, qu&rsquo;il traite de
+manière totalement identique. Ce n&rsquo;est pas le cas pour les autres. L&rsquo;exemple
+<i>(3)</i> est de coût nul, ce qu&rsquo;une méthode basé sur les méthodes de classements ne
+peux établir. Nos fonctions de potentiels elles infèrent bien que le coût du
+programme est 0.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org81a94da" class="outline-4">
+<h4 id="org81a94da">Itérations imbriquées interdépendantes</h4>
+<div class="outline-text-4" id="text-org81a94da">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #3b6ea8;">while</span> <span style="color: #3b6ea8;">(</span>n&lt;<span style="color: #97365b; font-weight: bold;">0</span><span style="color: #3b6ea8;">)</span> <span style="color: #3b6ea8;">{</span>
+    n++;
+    y = y+<span style="color: #97365b; font-weight: bold;">1000</span>;
+    <span style="color: #3b6ea8;">while</span><span style="color: #97365b;">(</span>y&gt;=<span style="color: #97365b; font-weight: bold;">100</span> &amp;&amp; rand_bool<span style="color: #4f894c;">()</span><span style="color: #97365b;">)</span> <span style="color: #97365b;">{</span>
+        y = y-<span style="color: #97365b; font-weight: bold;">100</span>;
+        tick<span style="color: #4f894c;">(</span><span style="color: #97365b; font-weight: bold;">5</span><span style="color: #4f894c;">)</span>;
+    <span style="color: #97365b;">}</span>
+    tick<span style="color: #97365b;">(</span><span style="color: #97365b; font-weight: bold;">9</span><span style="color: #97365b;">)</span>
+<span style="color: #3b6ea8;">}</span>
+</pre>
+</div>
+<p>
+La borne correcte est <b>59‹n,0› + 0.05‹0,y›</b>. En effet, la valeur initiale de <code>y</code>
+n&rsquo;influe que sur la première évaluation de la boucle.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfb2109e" class="outline-4">
+<h4 id="orgfb2109e">Traitement par bloc</h4>
+<div class="outline-text-4" id="text-orgfb2109e">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #3b6ea8;">for</span><span style="color: #3b6ea8;">(</span> ; l&gt;=<span style="color: #97365b; font-weight: bold;">8</span>; l-=<span style="color: #97365b; font-weight: bold;">8</span><span style="color: #3b6ea8;">)</span>
+    <span style="color: #29838d;">tick</span><span style="color: #3b6ea8;">(</span>N<span style="color: #3b6ea8;">)</span>;  <span style="color: #b1b1b1;">// </span><span style="color: #b1b1b1;">N est une constante</span>
+<span style="color: #3b6ea8;">for</span><span style="color: #3b6ea8;">(</span> ; l&gt;<span style="color: #97365b; font-weight: bold;">0</span>; l--<span style="color: #3b6ea8;">)</span>
+    tick<span style="color: #3b6ea8;">(</span><span style="color: #97365b; font-weight: bold;">1</span><span style="color: #3b6ea8;">)</span>
+</pre>
+</div>
+
+<p>
+C&rsquo;est un schéma classique de traitement par bloc, qui a été retrouvé par les
+auteurs dans tout les chiffres par blocs implémentés par <i>PGP</i>, dans les
+manipulation de bits de <i>libtiff</i>, ou encore dans un encodeur <i>MPEG</i>. Le
+raisonnement est le même pour la machine et l&rsquo;humain avec d&rsquo;autres constantes
+que 8 et 1. Il faut en fait sublimement équilibrer les potentiels entre les deux
+boucles en fonction de la taille de <code>l</code> par rapport à <code>N</code>. Le coût exacte est
+ici <b>(N/8)‹0,l›</b> quand <b>N≥8</b>, et <b>(7/8)(8-N) + (N/8)‹0,l›</b> quand <b>N&lt;8</b>. Notre
+outil est le seul pouvant rendre compte des bornes précises pour toutes les
+valeurs de <b>N</b>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3c00b14" class="outline-3">
+<h3 id="org3c00b14">Potentiels linéaires</h3>
+<div class="outline-text-3" id="text-org3c00b14">
+<p>
+Les fonctions de potentiel utilisées sont les combinaisons linéaires, à
+coefficients rationnels. Avant de proprement définir <b>Φ</b> nous devons définir les
+indices et éléments de bases des combinaisons linéaires. On travaille à
+programme fixe, et on définit:
+</p>
+<ul class="org-ul">
+<li><b>L</b> l&rsquo;ensemble des variables locales à un point du programme;</li>
+<li><b>G</b> l&rsquo;ensemble les variables globales;</li>
+<li><b>C</b> un ensemble fini de <i>symbole de constante</i>.</li>
+</ul>
+<p>
+On suppose ces trois ensembles sont disjoints.
+</p>
+
+<p>
+On définit <i>l&rsquo;état simplifié du programme</i> <b>σ : (G ∪ L ∪ C) → ℤ</b> associant aux
+variables et aux constantes leurs valeurs abstraites entières. L&rsquo;ensemble des
+indices des fonctions de potentiels est:
+</p>
+<blockquote>
+<p>
+<b>I = { (x,y) | x,y ∈ (G ∪ L ∪ C) ∧ x ≠ y }</b>
+</p>
+</blockquote>
+
+<p>
+L&rsquo;ensemble des fonctions de potentiel de base associe donc à une paire d&rsquo;entité
+du programme le potentiel qu&rsquo;elle engendre. Ce potentiel dépend évidemment de
+l&rsquo;indice <b>i ∈ I</b> considéré et de l&rsquo;état courant <b>σ</b>. On définit, pour <b>i = (x,y)</b>:
+</p>
+<blockquote>
+<p>
+<b>f<sub>i</sub>(σ) = ‹σ(x),σ(y)› = max(σ(y)-σ(x), 0)</b> si <b>i ≠ 0</b>
+<b>f<sub>0</sub>(σ) = 1</b>
+</p>
+</blockquote>
+
+<p>
+On peut enfin définir les fonctions de potentiels de notre analyse.
+</p>
+<blockquote>
+<p>
+<b>Φ : 𝕊 → ℤ</b> <br />
+<b>Φ(σ) = q<sub>0</sub> + q<sub>(x,y)</sub>‹σ(x),σ(y)› +  q<sub>(y,z)</sub>‹σ(y),σ(z)› + …</b> <br />
+où les indices parcourent <b>I</b>
+</p>
+</blockquote>
+
+<p>
+On utilisera les formes courtes de ses fonctions: on inclut un symbole <b>0</b> de 0
+dans <b>I</b>, que l&rsquo;on rend implicite:
+Les fonctions de potentiel sont entièrement définies par la famille <b>Q =
+(q<sub>i</sub>)<sub>i∈I</sub></b> des coefficients. Comme <b>I</b> est fini (chaque programme l&rsquo;est),
+<b>Q</b> est donc une <i>famille de rationnels positifs de support fini</i>, qui est une
+construction finitiste !
+</p>
+
+<blockquote>
+<p>
+<b>Φ(σ) = ∑<sub>i</sub> q<sub>i</sub> f<sub>i</sub>(σ) = Q(σ)</b>
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaff3944" class="outline-2">
+<h2 id="orgaff3944">Système de type</h2>
+<div class="outline-text-2" id="text-orgaff3944">
+<p>
+La sémantique de <i>Clight</i> est doté d&rsquo;une <i>métrique de ressource</i> <b>M</b> qui donne
+le coût dans <b>ℚ</b> de chaque étape de la sémantique opérationnelle. Dans nos
+règles, less sont limitées à <b>x ← y</b> et <b>x ← x ± y</b>. Pour ce faire,
+nous ré-écrivons le programme en explosant les affectations non-linéaires, en
+prenant soin d&rsquo;adapter les <b>q<sub>i</sub></b> idoines pour conserver un coût identique.
+Ce pré-traitement est sûr et garantit <i>qu&rsquo;aucune borne de boucle de dépend
+résultats d&rsquo;opérations non-linéaires</i>.
+</p>
+</div>
+
+<div id="outline-container-orgcc0972f" class="outline-3">
+<h3 id="orgcc0972f">Jugements de typage</h3>
+<div class="outline-text-3" id="text-orgcc0972f">
+<p>
+On définit les jugements de typages quantitatifs pour ce langage: ils sont basés
+sur ceux de la logique de Hoare: toutes les propositions sont séparées en une partie
+logique <b>Γ</b> et une partie quantitative <b>Q</b>. Le jugement principal est:
+</p>
+
+<blockquote>
+<p>
+<b>(Γ<sub>B</sub>;Q<sub>B</sub>), (Γ<sub>R</sub>;Q<sub>R</sub>) ⊢ {Γ;Q} S {Γ&rsquo;;Q&rsquo;}</b>
+</p>
+
+<p>
+Pour un état initial <b>σ</b>, si <b>Q(σ)</b> de potentiel est disponible et <b>Γ</b> vaut, on
+peut exécuter <b>S</b> sans débordement en produisant un état <b>σ&rsquo;</b>; il
+reste au moins <b>Q&rsquo;(σ&rsquo;)</b> de potentiel et <b>Γ&rsquo;</b> vaut.
+</p>
+</blockquote>
+
+<p>
+Le jugement est en vérité un iota plus complexe, pour gérer les flux de
+contrôles non-linéaires: comme en logique de Hoare, <b>(Γ<sub>B</sub>;Q<sub>B</sub>)</b> est la
+post-condition qui tient si <b>S</b> sort d&rsquo;un boucle avec <code>break</code>, et <b>(Γ<sub>R</sub>;Q<sub>R</sub>)</b>
+celle qui tient s&rsquo;il &laquo;&nbsp;<code>return</code>&nbsp;&raquo;.
+</p>
+
+<p>
+Notre système de type collecte des informations sur les fonctions globales du
+programme dans un contexte implicite <b>Δ</b>. Pour une fonction <code>f</code> d&rsquo;arguments
+formels <code>α</code> et de valeur retour <code>ρ</code> pour l&rsquo;appelant, on a:
+</p>
+
+<blockquote>
+<p>
+<b>Δ(f) = λa.(Γ<sub>f</sub>;Q<sub>f</sub>), λρ.(Γ<sub>f</sub>&rsquo;;Q<sub>f</sub>&rsquo;)</b>
+</p>
+
+<p>
+En instanciant les paramètres des informations de fonctions, on sait que dans un
+état <b>σ</b>, si <b>Q<sub>f</sub>(σ)</b> de potentiel est disponible et que <b>Γ<sub>f</sub></b> vaut, alors
+l&rsquo;appel à <b>f</b> s&rsquo;exécute sans débordement en produisant un état <b>σ&rsquo;</b>; il reste au
+moins <b>Q<sub>f</sub>&rsquo;(σ&rsquo;)</b> de potentiel et <b>Γ<sub>f</sub>&rsquo;</b> vaut.
+</p>
+</blockquote>
+</div>
+</div>
+
+
+<div id="outline-container-org5d35d25" class="outline-3">
+<h3 id="org5d35d25">Système de type</h3>
+<div class="outline-text-3" id="text-org5d35d25">
+<p>
+On utilise un système de type pour la logique de Hoare augmenté pour gérer le
+potentiel. Il faut donc <i>accumuler</i> le potentiel pour certaines instructions et
+le <i>dépenser</i>, après avoir vérifier que c&rsquo;est possible, pour d&rsquo;autre. L&rsquo;analyse
+statique préalable permet de spécialiser les règles de typages. Par exemple,
+<i>INCP</i> gère les instructions <code>x ← x+y</code> quand on peut déduire que <code>y ≥ 0</code>,
+<i>INCN</i> quand <code>y ≤ 0</code>, et <i>INC</i> quand l&rsquo;analyse de signe de <code>y</code> n&rsquo;est pas
+concluante. Des symétries apparaissent tout le long de notre système de type.
+</p>
+</div>
+
+<div id="outline-container-org6ee41a0" class="outline-4">
+<h4 id="org6ee41a0">Assignement</h4>
+<div class="outline-text-4" id="text-org6ee41a0">
+<p>
+On considère l&rsquo;instruction uniquement <code>x←x+y</code> avec <code>y≥0</code>: les autres
+assignements linéaires sont identiques à symétrie près, quitte à perdre en
+précision. La règle correspondante est <i>INCP</i> et ses cousines sont <i>DECP</i>,
+<i>INCN</i>, <i>DECN</i>, <i>INC</i>, et <i>DEC</i>.
+</p>
+
+<p>
+L&rsquo;évaluation de <code>x+y</code> a un coût propre <b>M<sub>e</sub>(<code>x+y</code>)</b>, et l&rsquo;affectation un coût
+<b>M<sub>u</sub></b> (pour <i>update</i>). On paye ces coûts avec le potentiel, mais comment
+évolue-t-il quand <code>x</code> augmente de <code>y</code> ? Par linéarité, les seuls termes du
+potentiel qui changent sont ceux des intervalles impliquant <code>x</code>, qui sont
+<b>‹x,u›</b> et <b>‹u,x›</b> pour tout les autres symboles <b>u</b>.
+</p>
+
+<p>
+On fixe maintenant <b>u</b>. On note <code>x′</code> la valeur de <code>x</code> après l&rsquo;affectation.
+Nécessairement, <code>x ≤ x′</code>, donc <b>‹x,u›</b> diminue. On peut alors récupérer son
+potentiel. Si de plus <code>x′≤u</code>, le potentiel <b>q<sub>0y</sub></b> de <code>y</code> augmente d&rsquo;au moins
+<b>q<sub>xu</sub></b>. Dans le cas contraire, on a <code>u≤x′</code>, donc <b>‹x,u› = 0</b> après
+l&rsquo;affectation, et <b>‹u,x›</b> augmente durant. On paie cette augmentation avec
+<b>q<sub>0y</sub></b>. En itérant la construction pour tout les <b>u</b>, on obtient un règle
+dirigée par la syntaxe.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org31b1493" class="outline-4">
+<h4 id="org31b1493">Itération (règle <i>LOOP</i> et <i>BREAK</i>)</h4>
+<div class="outline-text-4" id="text-org31b1493">
+<p>
+L&rsquo;itération dans notre langage cible est toujours de la forme <code>loop { ... break
+... }</code>. L&rsquo;analyse doit trouver le potentiel <b>Q</b> qui peut payer pour la boucle.
+Le potentiel post-boucle est passé dans les préconditions &laquo;&nbsp;break&nbsp;&raquo; du jugement du
+corps pour éventuellement être utilisée pour la sortie, et on paie le coût <b>M<sub>l</sub></b>
+de la boucle à chaque itération. On est encore dirigé par la syntaxe: la
+post-condition du <code>break</code> est celle de la boucle qu&rsquo;il termine.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org90d99c7" class="outline-4">
+<h4 id="org90d99c7">Appels de fonctions: <i>CALL</i></h4>
+<div class="outline-text-4" id="text-org90d99c7">
+<p>
+La règle est impressionnante, mais se résume à:
+</p>
+<ol class="org-ol">
+<li>Instancier la spécification de <code>f</code> avec les arguments et le retour effectif;</li>
+<li>Conserver les potentiels des intervalles de variables locales;</li>
+<li>Mettre à zéro les potentiels dépendants de variables globales.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org3e85f34" class="outline-4">
+<h4 id="org3e85f34">Affaiblissement et relaxation</h4>
+<div class="outline-text-4" id="text-org3e85f34">
+<p>
+L&rsquo;affaiblissement classique est autorisé. On peut aussi volontairement demander
+plus de potentiel dans les pré-conditions et en libérer moins dans les
+post-conditions. Cela implique une notion de <i>plus/moins</i> de potentiel, donnée
+par la règle <i>RELAX</i>. La relaxation définit le pré-ordre sur les potentiels,
+mais, plus important, elle permet la communication entre l&rsquo;analyse qualitative
+et quantitative: si on peut borner la valeur d&rsquo;un intervalle, on peut rendre
+constant le potentiel correspondant sans perte de sûreté.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6b93b8b" class="outline-2">
+<h2 id="org6b93b8b">Inférence automatisée par programmation linéaire</h2>
+<div class="outline-text-2" id="text-org6b93b8b">
+<p>
+L&rsquo;analyse de ressource comporte deux étapes. La dérivation des contraintes
+quantitatives de potentiel est la première. On l&rsquo;applique co-inductivement sur
+tout les composant fortement connexe du code,en utilisant les spécifications
+de fonctions obtenues pour les composantes suivantes. Les coefficients <b>q<sub>i</sub></b>
+sont tous symboliques, et les contraintes sont accumulés.
+</p>
+
+<p>
+Dans un second temps, on utilise un solveur de programmation linéaire tiers pour
+obtenir les coefficients effectifs. On résout d&rsquo;abord pour les coefficients
+indicés par des variables, puis ceux indicés par des constantes dans un second
+temps:
+</p>
+
+<p>
+Pour les premiers coefficients, on demande de résoudre les contraintes
+collectées, mais on souhaite aussi minimiser les potentiels liés au variables
+libres, et cela plus que les ceux associés aux variables liés et au constantes.
+On fournit donc au solveur un objectif <b>Obj</b> de minimisation encodant nos choix
+de priorités. Comme on sait <b>‹10,x›</b> est plus précis que <b>‹0,x›</b> l&rsquo;est plus que
+<b>‹0,10›</b>&#x2026; on pose <b>Obj = 1·‹0,x› +1000·‹10,x› + &#x2026;</b> On obtient du solveur une
+solution pour les contraintes et une valeur minimale de l&rsquo;objectif <b>min</b>.
+</p>
+
+<p>
+On rajoute la contrainte <b>Obj ≤ min</b> et on demande à minimiser <b>∑(y-x+1)·‹x,y›</b>,
+qui donne les bornes pour les coefficients des constantes. Tout ces coefficients
+feront parti du certificat que nous générons. On notera que si nous avions
+utilisé un solveur SMT, ce certificat aurait pris la forme, plus complexe, d&rsquo;un
+contre exemple dans une théorie.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgad85cf6" class="outline-2">
+<h2 id="orgad85cf6">Contexte logique et interaction utilisateur</h2>
+<div class="outline-text-2" id="text-orgad85cf6">
+<p>
+Le problème de l&rsquo;arrêt pouvant se réduire à la recherche d&rsquo;une fonction de
+potentiel, notre analyse est nécessairement incomplète. Il est alors judicieux
+de permettre une extension à posteriori de la partie logique de l&rsquo;analyse, comme
+les métriques interchangeables le permettent pour la partie quantitative.
+</p>
+
+<p>
+Dans cet article, l&rsquo;approche retenue est l&rsquo;ajout de <i>variables auxiliaires</i> et
+d&rsquo;assertions aux programmes pour lesquels l&rsquo;analyse automatique n&rsquo;est pas
+suffisante. En liant les variables auxiliaires et les variables utiles dans les
+assertions, on peut étendre localement le contexte logique et permettre à
+l&rsquo;analyse de progresser. Mais il faut pouvoir prouver (avec certificat) que
+l&rsquo;ajout variables auxiliaires ne change pas la sémantique, et étendre l&rsquo;outil
+pour permettre à l&rsquo;utilisateur de décrire les invariants des variables
+auxiliaires. La figure 7 exige, par exemple, de décrire que la variable
+auxiliaire <code>na</code> est le nombre d&rsquo;entrée dans un tableau de bit valant 1.
+</p>
+
+<p>
+Les artefacts de l&rsquo;article étant introuvables, la dernière version publique de
+C<sup>4</sup>B précédant cet article de 5 ans, le rapport technique ne donnant pas de
+détail, il est impossible de décrire un fonctionnement précis. On pourra noter
+que, dans la thèse de Carbonneaux, celui-ci indique la possibilité d&rsquo;annoter des
+programmes dans <i>Coq</i> avec des propositions du calcul des constructions
+inductives. On pourrait alors spéculer que des programmes <i>Clight</i> écrit en tant
+que littéraux Coq aurait pu servir d&rsquo;artefacts. L&rsquo;approche retenue dans la thèse
+est une approche modulaire de l&rsquo;analyse. Le cas de la figure 7 est résolu par
+l&rsquo;ajout d&rsquo;un domaine logarithmique aux fonctions de potentiels.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5bab9a5" class="outline-2">
+<h2 id="org5bab9a5">Relation à l&rsquo;état de l&rsquo;art</h2>
+<div class="outline-text-2" id="text-org5bab9a5">
+<p>
+<i>l&rsquo;auteur des notes invite une dernière fois de lire la partie <b>Travaux
+Connexes</b> des notes sur <a href="carbonneaux2018.html">la thèse de Carbonneaux</a>.</i>
+</p>
+
+<p>
+Nous avons été inspirés par l&rsquo;analyse de potentiel pour les programmes
+fonctionnels selon Hoffmann, et y avons ajouté aux potentiels des variables
+individuelles les potentiels aux intervalles entre variables, mais aussi entre
+<i>variables auxiliaires</i>, qui sont clés dans l&rsquo;analyse à la Hoare. Nous avons
+ainsi résolu le problème ouvert de l&rsquo;analyse de ressource amortie automatique
+des boucles sans décroissance bien-fondée triviale.
+</p>
+
+<p>
+L&rsquo;interaction utilisateur est une nouveauté dans l&rsquo;analyse amortie automatique,
+tout comme la possibilité de prendre en compte la libération dynamique de
+mémoire. Mais tout n&rsquo;est pas rose: notre analyse ne gère pas les pointeurs de
+fonctions ou les pointeurs vers la pile pour des raison d&rsquo;implémentation. Les
+points faibles de cette analyse sont, selon notre jugement:
+</p>
+<ul class="org-ul">
+<li>les invariants du tas (p.ex. les chaînes de caractères terminées par <code>\0</code>);</li>
+<li>l&rsquo;usage de ressource dépendant non-trivialement d&rsquo;opérateurs non-linéaires (<code>*</code>, <code>%</code>,
+&#x2026;)</li>
+<li>les programmes dont la terminaison n&rsquo;est prouvable que par des raisonnements
+complexes de flux de contrôle.</li>
+</ul>
+
+<p>
+Dans la littérature:
+</p>
+<ul class="org-ul">
+<li><p>
+Hoffmann a déjà produit des analyses dont les fonctions de potentiel sont de
+la forme <b>∑<sub>i,j∈I</sub> m<sub>i</sub>m<sub>j</sub></b>, permettant l&rsquo;analyse fine l&rsquo;algorithme de
+matrice encodées comme listes de listes.
+</p>
+
+<p>
+<i>Note du lecteur: il est depuis allé
+beaucoup plus loin, voir <a href="hoffmann2016.html">TARBAC</a></i>.
+</p></li>
+
+<li><a href="https://doi.org/10.1145/1375634.1375655">Braberman &amp; al</a> produit des bornes polynomiales pour la consommation de tas
+d&rsquo;appels de méthodes dans les langages à la Java par des méthodes de région,
+en passant par un problème d&rsquo;optimisation polynomiale paramétrique, résolue
+par un solveur externe.</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>
