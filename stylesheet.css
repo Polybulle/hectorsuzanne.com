@@ -31,5 +31,4 @@ h1, h2, h3, h4 {
 h2:before {
 content: url("seal.svg");
 padding: 0.2em;
-vertical-align: middle;
 }
