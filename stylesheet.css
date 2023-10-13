@@ -1,7 +1,7 @@
 body {
   margin: auto auto;
   max-width: 40em;
-  background-color: #f4f4f4;
+  background-color: #fff8f4;
   line-height: 1.3;
   padding: 2em;
   font-family: "Georgia", "Times New Roman", serif;
@@ -26,9 +26,10 @@ h1 { font-size: 34pt; }
 h2 { font-size: 24pt; }
 h1, h2, h3, h4 {
   color: #011111;
-  font-family: "Helvetica", "Arial", sans-serif;
+  font-family: "Avenir", "Arial", sans-serif;
 }
 h2:before {
-content: url("seal.svg");
+content: url("seal_small.svg");
 padding: 0.2em;
+transform: scale(0.1,0.1);
 }

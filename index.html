@@ -3,6 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
+<!-- 2023-10-13 Fri 19:33 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hector Suzanne</title>
@@ -192,7 +193,11 @@
   .org-svg { }
 </style>
 <link rel="stylesheet" type="text/css" href="stylesheet.css" />
-<link rel="icon" href="favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff0000">
 </head>
 <body>
 <div id="content" class="content">
@@ -201,18 +206,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1cace7b">Profile</a></li>
-<li><a href="#org37fc93c">PhD Thesis</a></li>
-<li><a href="#org9feb566"><i>Autobill</i></a></li>
-<li><a href="#org023247f">Blog</a></li>
-<li><a href="#orgb1f9de9">Resume</a></li>
-<li><a href="#org2a1a980">Manuscripts</a></li>
+<li><a href="#org303e81a">About</a></li>
+<li><a href="#orgeb91a19">Pre-Prints</a></li>
+<li><a href="#org52b1029">PhD Thesis</a></li>
+<li><a href="#orgda91a62">Autobill</a></li>
+<li><a href="#orgbf0ce66">CV/Resume</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1cace7b" class="outline-2">
-<h2 id="org1cace7b">Profile</h2>
-<div class="outline-text-2" id="text-org1cace7b">
+<div id="outline-container-org303e81a" class="outline-2">
+<h2 id="org303e81a">About</h2>
+<div class="outline-text-2" id="text-org303e81a">
 <p>
 Hi ! I&rsquo;m Hector Suzanne, Ph.D. student under <a href="https://www-apr.lip6.fr/~chaillou/">Pr. Emmanuel Chailloux</a> at the <a href="https://www.lip6.fr/recherche/team.php?acronyme=APR">APR</a>
 team at <a href="https://lip6.fr">LIP6</a>, the computer science lab at <a href="https://sorbonne-universite.fr">Sorbonne Université</a>. I was born in
@@ -222,35 +226,75 @@ email at <a href="mailto:hectorsuzanne@gmail.com">hectorsuzanne@gmail.com</a> (p
 </p>
 </div>
 </div>
-<div id="outline-container-org37fc93c" class="outline-2">
-<h2 id="org37fc93c">PhD Thesis</h2>
-<div class="outline-text-2" id="text-org37fc93c">
+<div id="outline-container-orgeb91a19" class="outline-2">
+<h2 id="orgeb91a19">Pre-Prints</h2>
+<div class="outline-text-2" id="text-orgeb91a19">
+</div>
+<div id="outline-container-orga9563f5" class="outline-3">
+<h3 id="orga9563f5">&ldquo;A reusable machine-calculus for automated resource analyses&rdquo; with Emmanuel Chailloux <a href="articles/lopstr23.pdf">PDF</a></h3>
+<div class="outline-text-3" id="text-orga9563f5">
+<p>
+An automated resource analysis technique is introduced, targeting a
+Call-By-Push-Value abstract machine, with memory prediction as a practical goal.
+The machine has a polymorphic and linear type system enhanced with a first-order
+logical fragment, which encodes both low-level operational semantics of resource
+manipulations and high-level synthesis of algorithmic complexity. Resource
+analysis must involve a diversity of static analysis, for escape, aliasing,
+algorithmic invariants, and more. Knowing this, we implement the <i>Automated
+Amortized Resource Analysis</i> framework (AARA) from scratch in our generic
+system. In this setting, access to resources is a state-passing effect which
+produces a compile-time approximation of runtime resource usage. We implemented
+type inference constraint generation for our calculus, accompanied with an
+elaboration of bounds for iterators on algebraic datatypes, for minimal ML-style
+programming languages with Call-by-Value and Call-By-Push-Value semantics. The
+closed-formed bounds are derived as multivariate polynomials over the integers.
+This now serves as a base for the development of an experimental toolkit for
+automated memory analysis of functional languages.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org52b1029" class="outline-2">
+<h2 id="org52b1029">PhD Thesis</h2>
+<div class="outline-text-2" id="text-org52b1029">
+</div>
+<div id="outline-container-orgdf96aa2" class="outline-3">
+<h3 id="orgdf96aa2">A sythetic approach to resource analysis</h3>
+<div class="outline-text-3" id="text-orgdf96aa2">
 <p>
 My PhD research focuses on compile-time prediction of memory usage for programs
 written in functional-imperative style, following the technique of <a href="https://doi.org/10.1017/S0960129521000487">Automated
-Amortized Resource Analysis</a>. The approach taken is based on an intermediate
-representation for functional-imperative languages with mutable values, based on
-a virtual machine, with the following features:
+Amortized Resource Analysis</a>.
+</p>
+
+<p>
+The approach is based on an intermediate representation for a
+virtual machine, with the following features:
 </p>
 <ul class="org-ul">
 <li><i>Call-By-Push-Value</i>: it allows both javascript- and Haskell-style functional
 programming, where evaluating data is done eagerly, and composing computations
-is done lazily.</li>
-<li><i>Linear type system</i>: Values can be <i>shareable</i>, freely duplicated, and memory
-managed, or <i>linear</i>, manually managed with move-copy semantics.</li>
-<li><i>Region</i>: it has region-backed safe memory management (like a mini-Rust) that
-guarantees safe static memory-management and gives an explicit account of
-memory allocations.</li>
-<li><i>Type-level logic programming</i>: its type inference system works by logic
-programming at type level, generated by the compiler and extendable by
-library-makers to account finely for their resource usage. The type-level
-language is based on Lambda-Prolog.</li>
+is done lazily. Those two <i>polarities</i> can be judiciously combined to encode
+efficient iterations and data processing workflows in an imperative style,
+which are compiled as purely functionnal programs for the VM.</li>
+<li><i>Linear type system</i>: Values can be <i>shareable</i> (freely duplicated, and memory
+managed) or <i>linear</i> (manually managed with move-copy semantics).</li>
+<li><i>Type-level programming</i>: its type inference engine works with SMT solvers
+following the <i>Liquid types</i> paradigm. A rudimentary solver for the
+first-order theory of uninterpreted symbols is available to deal with
+user-defined sorts and symbols.</li>
+<li><i>(Defunctionalized-)continuation-passing-style</i>: Contexts of evaluations are
+first-class data structures, and the analysis algorithms developed within AARA
+extend to those structures as well. Compared to previous AARA implementations,
+this allows for a streamlined type system that doesn&rsquo;t have to track
+evaluation contexts in a ad-hoc manner.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9feb566" class="outline-2">
-<h2 id="org9feb566"><i>Autobill</i></h2>
-<div class="outline-text-2" id="text-org9feb566">
+</div>
+<div id="outline-container-orgda91a62" class="outline-2">
+<h2 id="orgda91a62">Autobill</h2>
+<div class="outline-text-2" id="text-orgda91a62">
 <p>
 <a href="https://gitlab.lip6.fr/suzanneh/autobill">https://gitlab.lip6.fr/suzanneh/autobill</a>
 </p>
@@ -263,64 +307,29 @@ is based on <i>Intuitionistic Linear Logic</i>.
 </p>
 </div>
 </div>
-<div id="outline-container-org023247f" class="outline-2">
-<h2 id="org023247f">Blog</h2>
-<div class="outline-text-2" id="text-org023247f">
+<div id="outline-container-orgbf0ce66" class="outline-2">
+<h2 id="orgbf0ce66">CV/Resume</h2>
+<div class="outline-text-2" id="text-orgbf0ce66">
 <p>
-<i>Stay tuned.</i>
-</p>
-</div>
-</div>
-<div id="outline-container-orgb1f9de9" class="outline-2">
-<h2 id="orgb1f9de9">Resume</h2>
-<div class="outline-text-2" id="text-orgb1f9de9">
-<p>
-<a href="cv.pdf">Download my full resume here.</a> Briefly:
+Download my resume <a href="cv.pdf">🇺🇸 here</a>. Mon CV en français est disponible <a href="cv_fr.pdf">🇫🇷 ici</a>.
 </p>
 
+<p>
+Briefly:
+</p>
 <ul class="org-ul">
 <li>2021-Today: PhD at LIP6 on memory usage analysis through static typing for functional-imperative programming .</li>
-<li>2020-2021: Grad studies <i>Logique, Mathématiques, et Fondements de
+<li>2020-2021: Master&rsquo;s in mathematics <i>Logique, Mathématiques, et Fondements de
 l&rsquo;Informatique</i> at <i>Université Paris Cité</i></li>
-<li>2018-2020: Master <i>Sciences et Techniques do Logiciel</i> at <i>Sorbonne Université</i></li>
-<li>2016-2017: Licence in Computer Science at /ENS Paris-Saclay</li>
+<li>2018-2020: Master&rsquo;s in computer science <i>Sciences et Techniques do Logiciel</i> at <i>Sorbonne Université</i></li>
+<li>2016-2017: Licence in Computer Science at <i>ENS Paris-Saclay</i></li>
 <li>2014-2016: &ldquo;Prépa&rdquo; MPSI-MP* at <i>Lycée Descartes de Tours</i></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2a1a980" class="outline-2">
-<h2 id="org2a1a980">Manuscripts</h2>
-<div class="outline-text-2" id="text-org2a1a980">
 </div>
-<div id="outline-container-org5f29744" class="outline-3">
-<h3 id="org5f29744">Reading Notes (in French)</h3>
-<div class="outline-text-3" id="text-org5f29744">
-<p>
-&ldquo;†&rdquo; dénote une lecture partielle.
-</p>
-
-<ul class="org-ul">
-<li><a href="stage/vasconcelos2008.pdf">(PDF)</a><sup>†</sup> <i>P. Vasconcelos</i>. Space cost
-analysis using sized types</li>
-<li><a href="stage/carbonneaux2018.pdf">(PDF)</a><sup>†</sup> <i>Q. Carbonneaux</i>. Modular and
-Certified Resource-Bound Analyses</li>
-<li><a href="stage/albert2008.pdf">(PDF)</a> <i>E. Albert, A. Puri, G. Samir, P.
-Germán</i>. Closed-Form Upper Bounds in Static Cost Analysis</li>
-<li><a href="stage/hoffmann2016.pdf">(PDF)</a> <i>J. Hoffmann, D. Ankush &amp; W.
-Sun-Chun</i>. Towards automatic resource bound analysis for OCaml</li>
-<li><a href="stage/carbonneaux2015.pdf">(PDF)</a> <i>Q. Carbonneaux, J. Hoffmann &amp; Z.
-Shao</i>. Compositional Certified Resource Bounds</li>
-<li><a href="stage/Niu2018.pdf">(PDF)</a> <i>Y. Niu &amp; J. Hoffmann</i>. Automatic Space Bound Analysis for Functional Programs with Garbage Collection</li>
-<li><a href="stage/Salvucci2016.pdf">(PDF)</a> <i>J. Salvucci &amp; E. Chailloux</i>. Memory
-Consumption Analysis for a Functional and Imperative Language</li>
-<li><a href="stage/fluet2006.pdf">(PDF)</a> <i>M. Fluet, G. Morrisett &amp; A. Ahmed</i>. Linear Regions Are All You Need</li>
-<li><a href="stage/litchman2017.pdf">(PDF)</a> <i>B. Litchman, J. Hoffmann</i>. Arrays and References in resource Aware ML</li>
-<li><a href="stage/varoumas2019.pdf">(PDF)</a> <i>S. Varoumas</i>. Modèles de programmation de haut niveau pour microcontrôleurs à faible ressources.</li>
-<li><a href="stage/dallago2013.pdf">(PDF)</a> <i>U. Dal Lago, B. Petit</i> The geometry of types.</li>
-</ul>
-</div>
-</div>
-</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2023-10-13 Fri 19:33</p>
 </div>
 </body>
 </html>
