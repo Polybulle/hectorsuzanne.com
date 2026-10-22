@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ section.title }}</title>
+<link rel="me" href="https://mathstodon.xyz/@polybulle">
+<link rel="stylesheet" type="text/css" href="/stylesheet.css">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff0000">
+</head>
+<body>
+
+<h1>{{ section.title }}</h1>
+
+<div id="table-of-contents">
+<ul>
+{% for h in section.toc %}
+<li><a href="#{{ h.id }}"| safe }}">{{ h.title }}</a></li>
+{% endfor %}
+</ul>
+</div>
+
+{{ section.content | safe }}
+
+</body>
+</html>
