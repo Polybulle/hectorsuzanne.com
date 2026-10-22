@@ -1,239 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2025-03-21 Fri 11:45 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hector Suzanne</title>
-<meta name="generator" content="Org Mode" />
-<style type="text/css">
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { }
-</style>
 <link rel="me" href="https://mathstodon.xyz/@polybulle">
-<link rel="stylesheet" type="text/css" href="stylesheet.css" />
+<link rel="stylesheet" type="text/css" href="stylesheet.css">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ff0000">
 </head>
 <body>
-<div id="content" class="content">
-<h1 class="title">Hector Suzanne</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
+
+<h1>Hector Suzanne</h1>
+
+<div id="table-of-contents">
 <ul>
-<li><a href="#org57c83af">About</a></li>
-<li><a href="#org2b88add">PhD Thesis</a></li>
-<li><a href="#org3610d9b">Pre-Prints</a></li>
-<li><a href="#orga27292f">Autobill</a></li>
-<li><a href="#org10c2467">CV/Resume</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#phd-thesis">PhD Thesis</a></li>
+<li><a href="#pre-prints">Pre-Prints</a></li>
+<li><a href="#autobill">Autobill</a></li>
+<li><a href="#cv">CV/Resume</a></li>
 </ul>
 </div>
-</div>
-<div id="outline-container-org57c83af" class="outline-2">
-<h2 id="org57c83af">About</h2>
-<div class="outline-text-2" id="text-org57c83af">
+
+<h2 id="about">About</h2>
+
 <p>
-Hi ! I&rsquo;m Hector Suzanne, Ph.D. in computer science. I did my thesis under <a href="https://www-apr.lip6.fr/~chaillou/">Pr.
+Hi ! I'm Hector Suzanne, Ph.D. in computer science. I did my thesis under <a href="https://www-apr.lip6.fr/~chaillou/">Pr.
 Emmanuel Chailloux</a> at the <a href="https://www.lip6.fr/recherche/team.php?acronyme=APR">APR</a> team at <a href="https://lip6.fr">LIP6</a>, the computer science lab at <a href="https://sorbonne-universite.fr">Sorbonne
 Université</a>. I was born in 1996 and fascinated by math and programming ever
 since. To contact me, send an email at <a href="mailto:hectorsuzanne@gmail.com">hectorsuzanne@gmail.com</a> (personal) or
 <a href="mailto:hector.suzanne@lip6.fr">hector.suzanne@lip6.fr</a> (professional).
 </p>
-</div>
-</div>
-<div id="outline-container-org2b88add" class="outline-2">
-<h2 id="org2b88add">PhD Thesis</h2>
-<div class="outline-text-2" id="text-org2b88add">
-</div>
-<div id="outline-container-org3bdc064" class="outline-3">
-<h3 id="org3bdc064">Reusable resource analyses for high-level languages</h3>
-<div class="outline-text-3" id="text-org3bdc064">
+
+<h2 id="phd-thesis">PhD Thesis</h2>
+
+<h3>Reusable resource analyses for high-level languages</h3>
+
 <p>
 <b>New!</b> The defended version of my manuscript is available, exclusively
 <a href="articles/thesis.pdf">here</a>!
@@ -249,7 +54,7 @@ of <a href="https://doi.org/10.1017/S0960129521000487">Automated Amortized Resou
 The approach is based on an intermediate representation for a
 virtual machine, with the following features:
 </p>
-<ul class="org-ul">
+<ul>
 <li><i>Call-By-Push-Value</i>: it allows both javascript- and Haskell-style functional
 programming, where evaluating data is done eagerly, and composing computations
 is done lazily. Those two <i>polarities</i> can be judiciously combined to encode
@@ -264,19 +69,14 @@ user-defined sorts and symbols.</li>
 <li><i>(Defunctionalized-)continuation-passing-style</i>: Contexts of evaluations are
 first-class data structures, and the analysis algorithms developed within AARA
 extend to those structures as well. Compared to previous AARA implementations,
-this allows for a streamlined type system that doesn&rsquo;t have to track
+this allows for a streamlined type system that doesn't have to track
 evaluation contexts in a ad-hoc manner.</li>
 </ul>
-</div>
-</div>
-</div>
-<div id="outline-container-org3610d9b" class="outline-2">
-<h2 id="org3610d9b">Pre-Prints</h2>
-<div class="outline-text-2" id="text-org3610d9b">
-</div>
-<div id="outline-container-org4267295" class="outline-3">
-<h3 id="org4267295">&ldquo;A reusable machine-calculus for automated resource analyses&rdquo; with Emmanuel Chailloux <a href="articles/lopstr23.pdf">PDF</a></h3>
-<div class="outline-text-3" id="text-org4267295">
+
+<h2 id="pre-prints">Pre-Prints</h2>
+
+<h3>&ldquo;A reusable machine-calculus for automated resource analyses&rdquo; with Emmanuel Chailloux <a href="articles/lopstr23.pdf">PDF</a></h3>
+
 <p>
 An automated resource analysis technique is introduced, targeting a
 Call-By-Push-Value abstract machine, with memory prediction as a practical goal.
@@ -295,12 +95,9 @@ closed-formed bounds are derived as multivariate polynomials over the integers.
 This now serves as a base for the development of an experimental toolkit for
 automated memory analysis of functional languages.
 </p>
-</div>
-</div>
-</div>
-<div id="outline-container-orga27292f" class="outline-2">
-<h2 id="orga27292f">Autobill</h2>
-<div class="outline-text-2" id="text-orga27292f">
+
+<h2 id="autobill">Autobill</h2>
+
 <p>
 <a href="https://gitlab.lip6.fr/suzanneh/autobill">https://gitlab.lip6.fr/suzanneh/autobill</a>
 </p>
@@ -311,11 +108,9 @@ described above. The implementation I am currently building is called
 <i>Autobill</i>: it is <i>auto</i>-matic, computes the cost of programs (their <i>bill</i>), and
 is based on <i>Intuitionistic Linear Logic</i>.
 </p>
-</div>
-</div>
-<div id="outline-container-org10c2467" class="outline-2">
-<h2 id="org10c2467">CV/Resume</h2>
-<div class="outline-text-2" id="text-org10c2467">
+
+<h2 id="cv">CV/Resume</h2>
+
 <p>
 Download my resume <a href="cv.pdf">🇺🇸 here</a>. Mon CV en français est disponible <a href="cv_fr.pdf">🇫🇷 ici</a>.
 </p>
@@ -323,19 +118,14 @@ Download my resume <a href="cv.pdf">🇺🇸 here</a>. Mon CV en français est d
 <p>
 Briefly:
 </p>
-<ul class="org-ul">
+<ul>
 <li>2021-Today: PhD at LIP6 on memory usage analysis through static typing for functional-imperative programming .</li>
-<li>2020-2021: Master&rsquo;s in mathematics <i>Logique, Mathématiques, et Fondements de
-l&rsquo;Informatique</i> at <i>Université Paris Cité</i></li>
-<li>2018-2020: Master&rsquo;s in computer science <i>Sciences et Techniques do Logiciel</i> at <i>Sorbonne Université</i></li>
+<li>2020-2021: Master's in mathematics <i>Logique, Mathématiques, et Fondements de
+l'Informatique</i> at <i>Université Paris Cité</i></li>
+<li>2018-2020: Master's in computer science <i>Sciences et Techniques do Logiciel</i> at <i>Sorbonne Université</i></li>
 <li>2016-2017: Licence in Computer Science at <i>ENS Paris-Saclay</i></li>
-<li>2014-2016: &ldquo;Prépa&rdquo; MPSI-MP* at <i>Lycée Descartes de Tours</i></li>
+<li>2014-2016: "Prépa" MPSI-MP* at <i>Lycée Descartes de Tours</i></li>
 </ul>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="date">Created: 2025-03-21 Fri 11:45</p>
-</div>
+
 </body>
 </html>
