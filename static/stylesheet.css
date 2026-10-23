@@ -18,8 +18,8 @@ h1, h2, h3, h4 {
   line-height: 1.2;
 }
 h1 { font-size: 36pt; margin: 0 0 0.5rem; text-align: center; }
-h2 { font-size: 20pt; margin: 1.5rem 0 0.75rem; }
-h3 { font-size: 1.1rem; margin: 0rem 0 0.5rem; }
+h2 { font-size: 24pt; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1.35rem; margin: 0rem 0 0.5rem; }
 /* Seal: borderless SVG (no transparent margin), square, as tall as the capitals (~0.72em), bottom edge on the baseline.
    It hangs in the left gutter: margin-left cancels width + margin-right, so the title text starts on the margin. */
 h2::before {
@@ -27,8 +27,7 @@ h2::before {
   display: inline-block;
   width: 0.8em;
   height: 0.8em;
-  margin-right: 0.2em;
-  margin-left: -1em; /* = -(width + margin-right) */
+  margin-right: 0.3em;
   background: url("seal_borderless.svg") center / contain no-repeat;
   vertical-align: baseline; /* empty inline-block: its bottom edge sits on the text baseline */
 }
@@ -60,25 +59,29 @@ a { text-underline-offset: 0.15em; }
 }
 
 /* Links row under the title and links inside h3 titles: Avenir, normal weight, no underline at rest */
-#links a, h3 .tl {
+#links a, .tl {
   font-family: "Avenir", "Arial", sans-serif;
   font-weight: normal;
   text-decoration: none;
 }
-#links a:hover, h3 .tl:hover { text-decoration: underline; }
+#links a:hover, .tl:hover { text-decoration: underline; }
 #links a { font-size: 1.1rem; }
 
 /* Title links: "Title — Github · Homepage ▸Expand".
    The em-dash is drawn before the first link of the title (no need to type it). */
-h3 .tl { font-size: 0.95rem; }
-h3 > .tl:first-of-type::before {
+.tl { font-size: 0.95rem; }
+h3 > .tl:first-of-type::before, h3 + p > .tl:first-of-type::before {
   content: "\2014";
   display: inline-block; /* inline-block: the hover underline does not run under the dash */
   margin: 0 0.4em 0 0.15em;
   color: #011111; /* title color, not the link's */
 }
+/* Paper metadata line: the paragraph right after an h3 that carries title links.
+   Written in markdown as a plain line under the ### title: "with X, at VENUE'26 {% <link> %}..." */
+h3 + p:has(> .tl) { margin: -0.3rem 0 0.9rem; font-size: 0.95rem; }
+h3 + p:has(> .tl) .tri { display: none; } /* dot already separates; no triangle on paper lines */
 /* Separator: a small round dot, {% <sep> %}{% </sep> %} between two links */
-h3 .sep {
+.sep {
   display: inline-block;
   width: 0.22em;
   height: 0.22em;
