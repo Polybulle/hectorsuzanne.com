@@ -1,35 +1,95 @@
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
 body {
-  margin: auto auto;
-  max-width: 40em;
-  background-color: #fff8f4;
-  line-height: 1.3;
-  padding: 2em;
+  margin: 0 auto;
+  max-width: 48em;
+  padding: 2rem 1.25rem 3rem;
+  background-color: #faf7f1;
+  line-height: 1.6;
   font-family: "Georgia", "Times New Roman", serif;
 }
 
-#table-of-contents h2 {
-display: none;
-}
-
-#table-of-contents ul {
-list-style: none;
-text-align: center;
-}
-
-#table-of-contents li {
-display: inline;
-padding: 0.5em;
-}
-
-
-h1 { font-size: 34pt; }
-h2 { font-size: 24pt; }
+/* Headings: tight leading, more space above than below */
 h1, h2, h3, h4 {
   color: #011111;
   font-family: "Avenir", "Arial", sans-serif;
+  line-height: 1.2;
 }
-h2:before {
-content: url("seal_small.svg");
-padding: 0.2em;
-transform: scale(0.1,0.1);
+h1 { font-size: 36pt; margin: 0 0 0.5rem; text-align: center; }
+h2 { font-size: 20pt; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1.1rem; margin: 0rem 0 0.5rem; }
+/* Seal: borderless SVG (no transparent margin), square, as tall as the capitals (~0.72em), bottom edge on the baseline.
+   It hangs in the left gutter: margin-left cancels width + margin-right, so the title text starts on the margin. */
+h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.8em;
+  height: 0.8em;
+  margin-right: 0.2em;
+  margin-left: -1em; /* = -(width + margin-right) */
+  background: url("seal_borderless.svg") center / contain no-repeat;
+  vertical-align: baseline; /* empty inline-block: its bottom edge sits on the text baseline */
 }
+/* Narrow screens have no gutter to hang in: put the seal back inline */
+@media (max-width: 50em) {
+  h2::before { margin-left: 0; }
+}
+
+/* A subsection hugs the title above it */
+h2 + h3 { margin-top: 0.4rem; }
+
+/* Text blocks */
+p { margin: 0 0 1em; }
+ul { margin: 0 0 1em; padding-left: 1.5rem; }
+li { margin-bottom: 0.5em; }
+a { text-underline-offset: 0.15em; }
+
+/* Links row under the title (entries come from config.toml [extra.links]) */
+#links ul {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  text-align: center;
+}
+#links li {
+  display: inline-block;
+  margin: 0;
+  padding: 0.25rem 0.6rem;
+}
+
+/* Links row under the title and links inside h3 titles: Avenir, normal weight, no underline at rest */
+#links a, h3 .tl {
+  font-family: "Avenir", "Arial", sans-serif;
+  font-weight: normal;
+  text-decoration: none;
+}
+#links a:hover, h3 .tl:hover { text-decoration: underline; }
+#links a { font-size: 1.1rem; }
+
+/* Title links: "Title — Github · Homepage ▸Expand".
+   The em-dash is drawn before the first link of the title (no need to type it). */
+h3 .tl { font-size: 0.95rem; }
+h3 > .tl:first-of-type::before {
+  content: "\2014";
+  display: inline-block; /* inline-block: the hover underline does not run under the dash */
+  margin: 0 0.4em 0 0.15em;
+  color: #011111; /* title color, not the link's */
+}
+/* Separator: a small round dot, {% <sep> %}{% </sep> %} between two links */
+h3 .sep {
+  display: inline-block;
+  width: 0.22em;
+  height: 0.22em;
+  margin: 0 0.35em;
+  border-radius: 50%;
+  background: currentColor;
+  vertical-align: 0.25em;
+}
+/* Expand toggle: disclosure triangle is a text glyph inside the link, so the hover underline runs under it */
+.expand-toggle .tri::before { content: "\25B8"; font-size: 1.2em; margin-right: 0.1em; } /* ▸ closed */
+.expand-toggle[aria-expanded="true"] .tri::before { content: "\25BE"; } /* ▾ open */
+/* Expanded body: plain prose under the title */
+.expand { margin: 0.25rem 0 0; }
+.expand[hidden] { display: none; }

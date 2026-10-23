@@ -5,24 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ section.title }}</title>
 <link rel="me" href="https://mathstodon.xyz/@polybulle">
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link rel="stylesheet" type="text/css" href="{{ get_url(path='stylesheet.css', cachebust=true) | safe }}">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<noscript><style>.expand[hidden] { display: block; } .expand-toggle { display: none; }</style></noscript>
 </head>
 <body>
 
 <h1>{{ section.title }}</h1>
 
-<div id="table-of-contents">
+<nav id="links">
 <ul>
-{% for h in section.toc %}
-<li><a href="#{{ h.id }}">{{ h.title }}</a></li>
+{% for l in config.extra.links %}
+<li><a href="{{ l.href }}">{{ l.text }}</a></li>
 {% endfor %}
 </ul>
-</div>
+</nav>
 
 {{ section.content | safe }}
+
+<script>
+document.querySelectorAll(".expand-toggle").forEach(function (a) {
+  a.addEventListener("click", function (e) {
+    e.preventDefault();
+    var box = document.getElementById(a.getAttribute("aria-controls"));
+    box.hidden = !box.hidden;
+    a.setAttribute("aria-expanded", String(!box.hidden));
+  });
+});
+</script>
 
 </body>
 </html>

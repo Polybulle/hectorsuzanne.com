@@ -2,45 +2,100 @@
 title = "Hector Suzanne"
 +++
 
-## About
+I am a computer scientist working in software verification, currently via model-checking, at the [Laboratoire Méthodes Formelles (LMF)](https://lmf.cnrs.fr) of Université Paris-Saclay. I did my thesis on typing-based resource analysis at [LIP6](https://lip6.fr), the computer science lab of Sorbonne Université.
 
-Hi ! I'm Hector Suzanne, Ph.D. in computer science. I did my thesis under [Pr. Emmanuel Chailloux](https://www-apr.lip6.fr/~chaillou/) at the [APR](https://www.lip6.fr/recherche/team.php?acronyme=APR) team at [LIP6](https://lip6.fr), the computer science lab at [Sorbonne Université](https://sorbonne-universite.fr). I was born in 1996 and fascinated by math and programming ever since. To contact me, send an email at [hectorsuzanne@gmail.com](mailto:hectorsuzanne@gmail.com) (personal) or [hector.suzanne@lip6.fr](mailto:hector.suzanne@lip6.fr) (professional).
 
-## PhD Thesis
 
-### Reusable resource analyses for high-level languages
+## Research
 
-**New!** The defended version of my manuscript is available, exclusively [here](articles/thesis.pdf)!
+### Testing properties for model coverage via mutation techniques {% <expand id="mutation"> %}
+Will update this once I learn more about it...
+{% </expand> %}
 
-My PhD research focuses on compile-time prediction of memory usage for programs written in functional-imperative style, following, amongst others, the technique of [Automated Amortized Resource Analysis](https://doi.org/10.1017/S0960129521000487).
+### Transactional aspects of infinite-space model-checking {% <expand id="txcubicle"> %}
+Designing systems that gracefully scale to arbitrarily many nodes requires
+thinking across interdependent scales: what code will a given node run ? how do
+related nodes interact ? does the system at large maintain a viable state ? Those
+scenarios overlap and (mis)interact. Model checkers, such as
+[Cubicle](https://cubicle.lri.fr), allow designers to ensure that systems
+maintain safety conditions. They represent systems as a set of arrays indexed by
+node and a collection of transitions that describe the atomic test-and-update
+rules the system evolves by.
 
-The approach is based on an intermediate representation for a virtual machine, with the following features:
+This rule-based encoding erases control-flow information. It smears the original
+intents together to faithfully represent real-life concurrency, but does come at
+a cost: systems are often designed in terms of those desired narratives: "Some
+process asks for write permission, which causes a manager node to invalidate
+access for other nodes, at which point the original process is sent an ACK."
 
-- *Call-By-Push-Value*: it allows both javascript- and Haskell-style functional programming, where evaluating data is done eagerly, and composing computations is done lazily. Those two *polarities* can be judiciously combined to encode efficient iterations and data processing workflows in an imperative style, which are compiled as purely functionnal programs for the VM.
-- *Linear type system*: Values can be *shareable* (freely duplicated, and memory managed) or *linear* (manually managed with move-copy semantics).
-- *Type-level programming*: its type inference engine works with SMT solvers following the *Liquid types* paradigm. A rudimentary solver for the first-order theory of uninterpreted symbols is available to deal with user-defined sorts and symbols.
-- *(Defunctionalized-)continuation-passing-style*: Contexts of evaluations are first-class data structures, and the analysis algorithms developed within AARA extend to those structures as well. Compared to previous AARA implementations, this allows for a streamlined type system that doesn't have to track evaluation contexts in a ad-hoc manner.
+My postdoc work with Sylvain Conchon at LMF is `TxCubicle`, an extension of
+Cubicle where those intents are *transactions*: finite chains of transitions
+over a chosen slice of the system, which can branch and loop, and either commit
+as a whole or roll back and have no effect.
 
-## Pre-Prints
+Building a transactional model, then progressively dissolving its transactions by
+changing the code or the model semantics, lets the emergent behavior of the
+distributed system appear gradually. Designers can start modeling from the
+happy paths and get more pessimistic as failure modes become relevant. Knowing
+the designers' intent for their system is also useful in the search for
+inductive invariants: candidate invariants can be guessed from the simpler
+transactional system and tested against the smeared one, speeding up the search.
+{% </expand> %}
 
-### "A reusable machine-calculus for automated resource analyses" with Emmanuel Chailloux [PDF](articles/lopstr23.pdf)
+### Reusable resource analyses for high-level languages {% <expand id="autobill"> %}
+Emergent behavior in programs make it impossible —in theory— to know in
+advance how much work a computation will expend. We know how to enforce hard
+budget caps in some situations (such as embedded and system programming), but
+more generally, can we build languages that expose the possible cost of code ?
+Preferably while doing our algorithmics homework for us, of course:
 
-An automated resource analysis technique is introduced, targeting a Call-By-Push-Value abstract machine, with memory prediction as a practical goal. The machine has a polymorphic and linear type system enhanced with a first-order logical fragment, which encodes both low-level operational semantics of resource manipulations and high-level synthesis of algorithmic complexity. Resource analysis must involve a diversity of static analysis, for escape, aliasing, algorithmic invariants, and more. Knowing this, we implement the *Automated Amortized Resource Analysis* framework (AARA) from scratch in our generic system. In this setting, access to resources is a state-passing effect which produces a compile-time approximation of runtime resource usage. We implemented type inference constraint generation for our calculus, accompanied with an elaboration of bounds for iterators on algebraic datatypes, for minimal ML-style programming languages with Call-by-Value and Call-By-Push-Value semantics. The closed-formed bounds are derived as multivariate polynomials over the integers. This now serves as a base for the development of an experimental toolkit for automated memory analysis of functional languages.
+> "*This will allocate `8*n*log(n) + 5*n + 60` words of RAM after `n` requests*"
 
-## Autobill
+This was the overall topic of my PhD. Scientifically, it focused on compile-time
+prediction of memory usage for programs written in functional-imperative style,
+following, amongst others, the techniques of [Automated Amortized Resource
+Analysis (AARA)](https://doi.org/10.1017/S0960129521000487), adapting them to
+mainstream functional-programming implementation techniques. This ending up
+taking us (me + Emmanuel Chailloux, my advisor) onto a journey spanning proof
+theory, type theory, constraint solvers, and integer optimization.
 
-<https://gitlab.lip6.fr/suzanneh/autobill>
+The result was `Autobill`, a proof-of-concept analyser, that acted as a deconstruction and progressive dissolution of AARA into mainstream programming-language-theory techniques:
 
-The end-goal of the PhD is do develop and validate theorically the language described above. The implementation I am currently building is called *Autobill*: it is *auto*-matic, computes the cost of programs (their *bill*), and is based on *Intuitionistic Linear Logic*.
+- It was the first AARA implementation supporting *Call-by-Push-Value* semantics, which lets functional programmers finely control the runtime operation of their programs, implement their own notions of iterators, and build effect systems.
+- It was the first public implementation the *ILL* calculus/abstract machine. This let us separate reasoning on operation ordering, high-order computations, and flow of resources within programs.
+- It simplified the implementation of resource-aware type systems by fusing reasoning on the nested scope data held in the stack and the structured arborescent data held on the heap.
+- It re-interpreted AARA as a *constraint solving* problem. Starting from the type-level data inferred from programs, we were able to extract the algorithmic logic that underlie the budget constraint. This allowed different SMT solvers and optimizers to be used depending on algorithms a given program implements.
+- The core of AARA was rephrased as a family of metrics on data structures. Those provide a *combinatorial grading** within each data-type that behave nicely under runtime operations and reduce search for asymtotically optimal resource bounds into optimization in `R^n`. 
+{% </expand> %}
 
-## CV/Resume
+## Pre-prints
 
-Download my resume [🇺🇸 here](cv.pdf). Mon CV en français est disponible [🇫🇷 ici](cv_fr.pdf).
+### _Transaction-Guided Parameterized Model Checking in TxCubicle_, with Sylvain Conchon, at ICFEM'26 {% <link href="articles/icfem26.pdf"> %}PDF{% </link> %} {% <sep> %}{% </sep> %} {% <expand id="icfem26" label="Abstract"> %}
+Designing concurrent and distributed protocols is inherently difficult. Designers typically start from simple, high-level descriptions and progressively refine them into more detailed models that expose additional concurrency, communication patterns, and failure scenarios. For parameterized systems, whose correctness must hold for an arbitrary number of processes, this refinement process can quickly lead to models whose complexity overwhelms automated verification techniques.
 
-Briefly:
+This paper introduces TxCubicle, an extension of the Cubicle model checker with transactions that supports this progressive refinement process. Transactions are finite, possibly branching pieces of control flow involving a chosen slice of the system. Each resulting transaction path either completes as a whole or is rolled back and has no effect. These transactions can be composed, refined, split, and branched, allowing users to gradually introduce implementation details and concurrency while maintaining a manageable verification effort.
 
-- 2021-Today: PhD at LIP6 on memory usage analysis through static typing for functional-imperative programming .
-- 2020-2021: Master's in mathematics *Logique, Mathématiques, et Fondements de l'Informatique* at *Université Paris Cité*
-- 2018-2020: Master's in computer science *Sciences et Techniques do Logiciel* at *Sorbonne Université*
-- 2016-2017: Licence in Computer Science at *ENS Paris-Saclay*
-- 2014-2016: "Prépa" MPSI-MP* at *Lycée Descartes de Tours*
+We have implemented TxCubicle by integrating transactions with Cubicle's existing verification infrastructure. Transactions can reduce the effective state space explored during verification and guide invariant generation by exposing higher-level behavioral patterns. Our implementation preserves compatibility with Cubicle's highly optimized symbolic algorithms and SMT-based reasoning without introducing significant overhead. Experimental results show that transactions provide a more natural and efficient alternative to ad hoc control-flow encodings, substantially accelerating invariant generation and improving verification performance even when the underlying reachable state space remains unchanged.
+{% </expand> %}
+
+### _Reusable resource analyses for high-level languages_, my PhD thesis, under Emmanuel Chailloux {% <link href="articles/thesis.pdf"> %}Manuscript{% </link> %}
+  
+### _A reusable machine-calculus for automated resource analyses_, with Emmanuel Chailloux, at LOPSTR'23 {% <link href="articles/lopstr23.pdf"> %}PDF{% </link> %} {% <sep> %}{% </sep> %} {% <expand id="lopstr23" label="Abstract"> %}
+An automated resource analysis technique is introduced, targeting a Call-By-Push-Value abstract machine, with memory prediction as a practical goal. The machine has a polymorphic and linear type system enhanced with a first-order logical fragment, which encodes both low-level operational semantics of resource manipulations and high-level synthesis of algorithmic complexity. Resource analysis must involve a diversity of static analyses, for escape, aliasing, algorithmic invariants, and more. Knowing this, we implement the *Automated Amortized Resource Analysis* framework (AARA) from scratch in our generic system. In this setting, access to resources is a state-passing effect which produces a compile-time approximation of runtime resource usage. We implemented type inference constraint generation for our calculus, accompanied with an elaboration of bounds for iterators on algebraic datatypes, for minimal ML-style programming languages with Call-by-Value and Call-By-Push-Value semantics. The closed-form bounds are derived as multivariate polynomials over the integers. This now serves as a base for the development of an experimental toolkit for automated memory analysis of functional languages.
+{% </expand> %}
+
+## Software
+
+### TxCubicle {% <link href="https://github.com/Polybulle/cubicle"> %}Github{% </link> %} {% <sep> %}{% </sep> %} {% <link href="https://cubicle.lri.fr"> %}Homepage{% </link> %}
+
+A model-checker for infinite-space array transition system, including a tightly optimized SMT solver, that supports control-flow, invariant generation, and universal guards. 
+
+### Autobill {% <link href="https://github.com/Polybulle/Autobill"> %}Github{% </link> %}
+
+A type-checker and interpreter for a suite of ML-style languages with call-by-value and call-by-push-value semantics, including its intuintionistic-linear type system, resource-aware types, and polynomial-bound generation using AARA
+
+## Resume
+
+🇺🇸 Download my resume [here](cv.pdf).
+
+🇫🇷 Mon CV en français est disponible [ici](cv_fr.pdf).

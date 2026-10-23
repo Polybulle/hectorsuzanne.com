@@ -3,3 +3,13 @@ title = "Hector Suzanne"
 compile_sass = false
 build_search_index = false
 generate_feeds = false
+
+[extra]
+# Links shown under the page title, in order
+links = [
+  { text = "Blog", href = "https://polybulle.net" },
+  { text = "Github", href = "https://github.com/Polybulle" },
+  { text = "LinkedIn", href = "https://www.linkedin.com/in/hector-suzanne" },
+  { text = "Twitter", href = "https://x.com/Polybulle" },
+  { text = "Email", href = "mailto:hectorsuzanne@gmail.com" },
+]

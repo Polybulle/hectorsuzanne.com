@@ -1,0 +1,18 @@
+{#- Title links. All three are meant to sit on a "### Title" line, after the title text.
+    The em-dash before the first link and the Avenir styling come from stylesheet.css (h3 .tl). -#}
+
+{#- Direct link:  {% <link href="https://..."> %}Github{% </link> %} -#}
+{% component link(href) %}<a class="tl" href="{{ href }}">{{ body | trim }}</a>{% endcomponent link %}
+
+{#- Separator dot between two links:  {% <sep> %}{% </sep> %} -#}
+{% component sep() %}<span class="sep" aria-hidden="true"></span>{% endcomponent sep %}
+
+{#- Expandable body. Must be the LAST thing on the title line, since its body follows on the next lines:
+      ### Title {% <expand id="unique" label="Abstract"> %}
+      markdown body...
+      {% </expand> %}
+    label defaults to "Expand". -#}
+{% component expand(id, label="Expand") %}<a class="tl expand-toggle" href="#" role="button" aria-expanded="false" aria-controls="exp-{{ id }}"><span class="tri" aria-hidden="true"></span>{{ label }}</a>
+<div class="expand" id="exp-{{ id }}" hidden>
+{{ body | markdown | safe }}
+</div>{% endcomponent expand %}
