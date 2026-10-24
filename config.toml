@@ -5,11 +5,11 @@ build_search_index = false
 generate_feeds = false
 
 [extra]
-# Links shown under the page title, in order
+# Address block beside the intro, in order. text = small-caps label, handle = what is shown.
 links = [
-  { text = "Blog", href = "https://polybulle.net" },
-  { text = "Github", href = "https://github.com/Polybulle" },
-  { text = "LinkedIn", href = "https://www.linkedin.com/in/hector-suzanne" },
-  { text = "Twitter", href = "https://x.com/Polybulle" },
-  { text = "Email", href = "mailto:hectorsuzanne@gmail.com" },
+  { text = "Blog", handle = "polybulle.net", href = "https://polybulle.net" },
+  { text = "Github", handle = "Polybulle", href = "https://github.com/Polybulle" },
+  { text = "LinkedIn", handle = "hector-suzanne", href = "https://www.linkedin.com/in/hector-suzanne" },
+  { text = "Twitter", handle = "@Polybulle", href = "https://x.com/Polybulle" },
+  { text = "Email", handle = "hectorsuzanne@gmail.com", href = "mailto:hectorsuzanne@gmail.com" },
 ]

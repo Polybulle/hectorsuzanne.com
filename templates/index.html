@@ -13,12 +13,21 @@
 </head>
 <body>
 
-<h1>{{ section.title }}</h1>
-
-<nav id="links">
+{#- Account links (config.toml [extra.links]), overlaid in the top-right corner of the page -#}
+<address id="corner">
 <ul>
 {% for l in config.extra.links %}
 <li><a href="{{ l.href }}">{{ l.text }}</a></li>
+{% endfor %}
+</ul>
+</address>
+
+<h1>{{ section.title }}</h1>
+
+<nav id="toc">
+<ul>
+{% for h in section.toc %}
+<li><a href="#{{ h.id }}">{{ h.title }}</a></li>
 {% endfor %}
 </ul>
 </nav>
