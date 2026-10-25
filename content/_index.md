@@ -99,6 +99,6 @@ A type-checker and interpreter for a suite of ML-style languages with call-by-va
 
 ## Resume
 
-🇺🇸 Download my resume [here](cv.pdf).
+🇺🇸 Download my resume [here](SUZANNE_Hector_resume.pdf).
 
-🇫🇷 Mon CV en français est disponible [ici](cv_fr.pdf).
+🇫🇷 Mon CV en français est disponible [ici](SUZANNE_Hector_CV.pdf).
