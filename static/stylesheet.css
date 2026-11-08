@@ -1,26 +1,51 @@
+/* hectorsuzanne.com — same palette and type as polybulle.net: system sans, resume blue, lime hover, light and dark. */
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
 
+:root {
+  color-scheme: light dark;
+  --bg: #fbfcfe;
+  --ink: #141821;
+  --muted: #687088;
+  --faint: #e3e9f7;
+  --accent: #1a4fd6;      /* resume blue (cv.typ): links, seal, marks */
+  --mark: #d4ff3a;        /* acid lime: hover and selection only */
+  --mark-ink: #141821;
+  --sans: system-ui, -apple-system, "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
+  --mono: ui-monospace, "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f121a;
+    --ink: #e7eaf3;
+    --muted: #8a93aa;
+    --faint: #252b3a;
+    --accent: #6f97ff;
+    --mark-ink: #0f121a;
+  }
+}
+
+::selection { background: var(--mark); color: var(--mark-ink); }
+
 body {
   margin: 0 auto;
-  max-width: 48em;
+  max-width: 46em;
   padding: 2rem 1.25rem 3rem;
-  background-color: #faf7f1;
-  line-height: 1.6;
-  font-family: "Georgia", "Times New Roman", serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
 }
 
 /* Headings: tight leading, more space above than below */
-h1, h2, h3, h4 {
-  color: #011111;
-  font-family: "Avenir", "Arial", sans-serif;
-  line-height: 1.2;
-}
-h1 { font-size: 36pt; margin: 0 0 0.5rem; text-align: center; }
-h2 { font-size: 24pt; margin: 1.5rem 0 0.75rem; }
-h3 { font-size: 1.35rem; margin: 0rem 0 0.5rem; }
-/* Seal: borderless SVG (no transparent margin), square, as tall as the capitals (~0.72em), bottom edge on the baseline.
+h1, h2, h3, h4 { color: var(--ink); line-height: 1.25; }
+h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; text-align: center; }
+h2 { font-size: 1.55rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+h3 { font-size: 1.15rem; font-weight: 650; margin: 0 0 0.5rem; }
+/* Seal: seal_blue.svg / seal_blue_dark.svg are seal_borderless.svg with its red swapped for the accent
+   (sed 's/#ff0000/<accent>/g', as cv.typ does). A CSS mask would flatten the seal's white inner shapes.
    It hangs in the left gutter: margin-left cancels width + margin-right, so the title text starts on the margin. */
 h2::before {
   content: "";
@@ -28,8 +53,11 @@ h2::before {
   width: 0.8em;
   height: 0.8em;
   margin-right: 0.3em;
-  background: url("seal_borderless.svg") center / contain no-repeat;
+  background: url("seal_blue.svg") center / contain no-repeat;
   vertical-align: baseline; /* empty inline-block: its bottom edge sits on the text baseline */
+}
+@media (prefers-color-scheme: dark) {
+  h2::before { background-image: url("seal_blue_dark.svg"); }
 }
 /* Narrow screens have no gutter to hang in: put the seal back inline */
 @media (max-width: 50em) {
@@ -43,14 +71,26 @@ h2 + h3 { margin-top: 0.4rem; }
 p { margin: 0 0 1em; }
 ul { margin: 0 0 1em; padding-left: 1.5rem; }
 li { margin-bottom: 0.5em; }
-a { text-underline-offset: 0.15em; }
+a {
+  color: var(--accent);
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+}
+a:hover { background: var(--mark); color: var(--mark-ink); text-decoration: none; }
+blockquote {
+  margin: 0 0 1em;
+  padding-left: 1em;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+code { font-family: var(--mono); font-size: 0.88em; }
 
 /* Quick-jump row under the title: one entry per h2, built from section.toc */
 html { scroll-behavior: smooth; }
 h2 { scroll-margin-top: 1rem; }
 #toc ul {
   list-style: none;
-  margin: 0 0 1rem;
+  margin: 0 0 1.5rem;
   padding: 0;
   text-align: center;
 }
@@ -60,56 +100,43 @@ h2 { scroll-margin-top: 1rem; }
   padding: 0.25rem 0.6rem;
 }
 
-/* Quick-jump row and links inside h3 titles / intro: Avenir, normal weight, no underline at rest */
+/* Quick-jump row and links inside h3 titles / intro: normal weight, no underline at rest */
 #toc a, .tl {
-  font-family: "Avenir", "Arial", sans-serif;
   font-weight: normal;
   text-decoration: none;
 }
-#toc a:hover, .tl:hover { text-decoration: underline; }
-#toc a { font-size: 1.1rem; }
+#toc a { font-size: 1.05rem; }
 
-/* Account links (config.toml [extra.links]): overlaid in the top-right corner of the page,
-   out of the flow, so the title and text do not move. One label per line, right-aligned. */
-#corner {
-  position: absolute;
-  top: 1rem;
-  right: 1.25rem;
-  font-style: normal;
-  text-align: right;
-}
-#corner ul { list-style: none; margin: 0; padding: 0; }
-#corner li { margin: 0; line-height: 1.6; }
-#corner a {
-  font-family: "Avenir", "Arial", sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #b8b0a3;
+/* Account links (config.toml [extra.links]): one quiet mono row right after the intro paragraph,
+   like a signature line. Wraps naturally on phones. */
+#links { font-style: normal; margin: -0.3rem 0 0; }
+#links ul { list-style: none; margin: 0; padding: 0; }
+#links li { display: inline-block; margin: 0 1.1em 0 0; }
+#links a {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--muted);
   text-decoration: none;
 }
-#corner a:hover { color: #011111; }
-/* Phones: the title spans the full width, so an overlay would sit on it.
-   Back in the flow as one centered row above the title.
-   44em: below ~700px the overlay starts to sit on the end of the jump row. */
-@media (max-width: 44em) {
-  #corner { position: static; margin: -1rem 0 1rem; text-align: center; }
-  #corner li { display: inline-block; margin: 0 0.4em; }
-  #corner a { letter-spacing: 0.06em; }
-}
+#links a::before { content: "→ "; color: var(--accent); }
 
 /* Title links: "Title — Github · Homepage ▸Expand".
    The em-dash is drawn before the first link of the title (no need to type it). */
 .tl { font-size: 0.95rem; }
+/* The dash is a pseudo-element of the link, so it is taken out of the link's box (absolute, left of it)
+   and made click-through: hovering or clicking it does nothing. */
+h3 > .tl:first-of-type, h3 + p > .tl:first-of-type { position: relative; margin-left: 1.55em; }
 h3 > .tl:first-of-type::before, h3 + p > .tl:first-of-type::before {
   content: "\2014";
-  display: inline-block; /* inline-block: the hover underline does not run under the dash */
-  margin: 0 0.4em 0 0.15em;
-  color: #011111; /* title color, not the link's */
+  position: absolute;
+  right: 100%;
+  margin-right: 0.4em;
+  pointer-events: none;
+  color: var(--muted); /* not the link's colour */
 }
 /* Paper metadata line: the paragraph right after an h3 that carries title links.
    Written in markdown as a plain line under the ### title: "with X, at VENUE'26 {% <link> %}..." */
-h3 + p:has(> .tl) { margin: -0.3rem 0 0.9rem; font-size: 0.95rem; }
+h3 + p:has(> .tl) { margin: -0.3rem 0 0.9rem; font-size: 0.95rem; color: var(--muted); }
 h3 + p:has(> .tl) .tri { display: none; } /* dot already separates; no triangle on paper lines */
 /* Separator: a small round dot, {% <sep> %}{% </sep> %} between two links */
 .sep {
@@ -121,7 +148,7 @@ h3 + p:has(> .tl) .tri { display: none; } /* dot already separates; no triangle 
   background: currentColor;
   vertical-align: 0.25em;
 }
-/* Expand toggle: disclosure triangle is a text glyph inside the link, so the hover underline runs under it */
+/* Expand toggle: disclosure triangle is a text glyph inside the link, so the hover highlight covers it */
 .expand-toggle .tri::before { content: "\25B8"; font-size: 1.2em; margin-right: 0.1em; } /* ▸ closed */
 .expand-toggle[aria-expanded="true"] .tri::before { content: "\25BE"; } /* ▾ open */
 /* Expanded body: plain prose under the title */

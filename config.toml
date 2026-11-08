@@ -10,6 +10,5 @@ links = [
   { text = "Blog", handle = "polybulle.net", href = "https://polybulle.net" },
   { text = "Github", handle = "Polybulle", href = "https://github.com/Polybulle" },
   { text = "LinkedIn", handle = "hector-suzanne", href = "https://www.linkedin.com/in/hector-suzanne" },
-  { text = "Twitter", handle = "@Polybulle", href = "https://x.com/Polybulle" },
   { text = "Email", handle = "hectorsuzanne@gmail.com", href = "mailto:hectorsuzanne@gmail.com" },
 ]
