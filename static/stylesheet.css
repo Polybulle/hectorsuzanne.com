@@ -1,156 +1,108 @@
-/* hectorsuzanne.com — same palette and type as polybulle.net: system sans, resume blue, lime hover, light and dark. */
-*, *::before, *::after { box-sizing: border-box; }
+/* hectorsuzanne.com. Colours, type, links and code come from style.css, a copy of polybulle.net's
+   file that templates/index.html loads first. This file holds only what the homepage does differently. */
 
-html { -webkit-text-size-adjust: 100%; }
-
-:root {
-  color-scheme: light dark;
-  --bg: #fbfcfe;
-  --ink: #141821;
-  --muted: #687088;
-  --faint: #e3e9f7;
-  --accent: #1a4fd6;      /* resume blue (cv.typ): links, seal, marks */
-  --mark: #d4ff3a;        /* acid lime: hover and selection only */
-  --mark-ink: #141821;
-  --sans: system-ui, -apple-system, "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
-  --mono: ui-monospace, "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
+/* Where the homepage departs from the blog. Delete a line to take the blog's value. */
+html { scroll-behavior: smooth; }
+body { max-width: 46em; padding-bottom: 3rem; }
+h1, h2, h3 { letter-spacing: normal; }
+/* Masthead (same as the blog's, from style.css): name in white mono, links right in grey */
+#mast { max-width: none; margin-bottom: 2rem; flex-wrap: wrap; gap: 0.4rem 1.5rem; } /* the blog caps it at 36em for its sidenotes */
+#mast nav { text-align: right; }
+#mast .name { margin: 0; white-space: nowrap; font-weight: normal; letter-spacing: normal; }
+#mast .name { font-size: 1.8rem; line-height: 1.1; }
+/* The seal before the name: larger than the section seals (0.8em of a 1.55rem title). */
+#mast .name::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-right: 0.3em;
+  background: url("seal_blue_dark.svg") center / contain no-repeat;
+  vertical-align: baseline;
 }
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0f121a;
-    --ink: #e7eaf3;
-    --muted: #8a93aa;
-    --faint: #252b3a;
-    --accent: #6f97ff;
-    --mark-ink: #0f121a;
-  }
-}
-
-::selection { background: var(--mark); color: var(--mark-ink); }
-
-body {
-  margin: 0 auto;
-  max-width: 46em;
-  padding: 2rem 1.25rem 3rem;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 1.0625rem;
-  line-height: 1.65;
-}
-
-/* Headings: tight leading, more space above than below */
-h1, h2, h3, h4 { color: var(--ink); line-height: 1.25; }
-h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 0.5rem; text-align: center; }
-h2 { font-size: 1.55rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+h2 { font-size: 1.55rem; margin: 2rem 0 0.75rem; }
 h3 { font-size: 1.15rem; font-weight: 650; margin: 0 0 0.5rem; }
-/* Seal: seal_blue.svg / seal_blue_dark.svg are seal_borderless.svg with its red swapped for the accent
-   (sed 's/#ff0000/<accent>/g', as cv.typ does). A CSS mask would flatten the seal's white inner shapes.
-   It hangs in the left gutter: margin-left cancels width + margin-right, so the title text starts on the margin. */
+h2 + h3 { margin-top: 0.4rem; } /* a subsection hugs the title above it */
+ul { padding-left: 1.5rem; }
+li { margin-bottom: 0.5em; }
+strong { font-weight: bolder; }
+:not(pre) > code { background: none; padding: 0; border-radius: 0; }
+
+/* Seal before each section title. seal_blue_dark.svg is seal_borderless.svg with its
+   red swapped for the accent (sed 's/#ff0000/<accent>/g', as cv.typ does). A CSS mask would flatten
+   the seal's white inner shapes. */
+/* The seal (h2) and the arrow (h3) sit centred in one shared column of width --lead, then a gap of --gap,
+   so both kinds of title start on the same left edge. */
+:root { --lead: 1.4rem; --gap: 0.5rem; }
 h2::before {
   content: "";
   display: inline-block;
-  width: 0.8em;
+  width: var(--lead);
   height: 0.8em;
-  margin-right: 0.3em;
-  background: url("seal_blue.svg") center / contain no-repeat;
+  margin-right: var(--gap);
+  background: url("seal_blue_dark.svg") center / contain no-repeat;
   vertical-align: baseline; /* empty inline-block: its bottom edge sits on the text baseline */
 }
-@media (prefers-color-scheme: dark) {
-  h2::before { background-image: url("seal_blue_dark.svg"); }
-}
-/* Narrow screens have no gutter to hang in: put the seal back inline */
-@media (max-width: 50em) {
-  h2::before { margin-left: 0; }
-}
 
-/* A subsection hugs the title above it */
-h2 + h3 { margin-top: 0.4rem; }
+/* Title links: normal weight, no underline at rest */
+.tl { font-weight: normal; text-decoration: none; }
 
-/* Text blocks */
-p { margin: 0 0 1em; }
-ul { margin: 0 0 1em; padding-left: 1.5rem; }
-li { margin-bottom: 0.5em; }
-a {
-  color: var(--accent);
-  text-decoration-thickness: 0.12em;
-  text-underline-offset: 0.18em;
-}
-a:hover { background: var(--mark); color: var(--mark-ink); text-decoration: none; }
-blockquote {
-  margin: 0 0 1em;
-  padding-left: 1em;
-  border-left: 3px solid var(--accent);
-  color: var(--muted);
-}
-code { font-family: var(--mono); font-size: 0.88em; }
-
-/* Quick-jump row under the title: one entry per h2, built from section.toc */
-html { scroll-behavior: smooth; }
-h2 { scroll-margin-top: 1rem; }
-#toc ul {
-  list-style: none;
-  margin: 0 0 1.5rem;
-  padding: 0;
-  text-align: center;
-}
-#toc li {
-  display: inline-block;
-  margin: 0;
-  padding: 0.25rem 0.6rem;
-}
-
-/* Quick-jump row and links inside h3 titles / intro: normal weight, no underline at rest */
-#toc a, .tl {
-  font-weight: normal;
-  text-decoration: none;
-}
-#toc a { font-size: 1.05rem; }
-
-/* Account links (config.toml [extra.links]): one quiet mono row right after the intro paragraph,
-   like a signature line. Wraps naturally on phones. */
-#links { font-style: normal; margin: -0.3rem 0 0; }
-#links ul { list-style: none; margin: 0; padding: 0; }
-#links li { display: inline-block; margin: 0 1.1em 0 0; }
-#links a {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  color: var(--muted);
-  text-decoration: none;
-}
-#links a::before { content: "→ "; color: var(--accent); }
-
-/* Title links: "Title — Github · Homepage ▸Expand".
-   The em-dash is drawn before the first link of the title (no need to type it). */
+/* Title links: "Title — PDF". The em-dash is drawn before the first link of the title (no need to
+   type it). It sits outside the link's box and is click-through. */
 .tl { font-size: 0.95rem; }
-/* The dash is a pseudo-element of the link, so it is taken out of the link's box (absolute, left of it)
-   and made click-through: hovering or clicking it does nothing. */
-h3 > .tl:first-of-type, h3 + p > .tl:first-of-type { position: relative; margin-left: 1.55em; }
-h3 > .tl:first-of-type::before, h3 + p > .tl:first-of-type::before {
+h3 > .tl:not(.gh):not(.expand-toggle) { position: relative; margin-left: 1.55em; }
+h3 > .tl:not(.gh):not(.expand-toggle) ~ .tl:not(.gh)::before { content: none; } /* one dash per title */
+h3 > .tl:not(.gh):not(.expand-toggle)::before {
   content: "\2014";
   position: absolute;
   right: 100%;
   margin-right: 0.4em;
   pointer-events: none;
-  color: var(--muted); /* not the link's colour */
+  color: var(--muted);
 }
-/* Paper metadata line: the paragraph right after an h3 that carries title links.
-   Written in markdown as a plain line under the ### title: "with X, at VENUE'26 {% <link> %}..." */
-h3 + p:has(> .tl) { margin: -0.3rem 0 0.9rem; font-size: 0.95rem; color: var(--muted); }
-h3 + p:has(> .tl) .tri { display: none; } /* dot already separates; no triangle on paper lines */
-/* Separator: a small round dot, {% <sep> %}{% </sep> %} between two links */
-.sep {
-  display: inline-block;
-  width: 0.22em;
-  height: 0.22em;
-  margin: 0 0.35em;
-  border-radius: 50%;
-  background: currentColor;
-  vertical-align: 0.25em;
+/* Github icon: sits first in the title, in the same column as the seal and the arrow, blue like them. */
+h3:has(> .gh) { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--gap); }
+.gh { order: -1; width: var(--lead); text-align: center; }
+.gh::before {
+  content: ""; display: inline-block; width: 0.9em; height: 0.9em; vertical-align: -0.1em;
+  background: var(--accent);
+  -webkit-mask: var(--gh) center / contain no-repeat; mask: var(--gh) center / contain no-repeat;
+  --gh: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/%3E%3C/svg%3E");
 }
-/* Expand toggle: disclosure triangle is a text glyph inside the link, so the hover highlight covers it */
-.expand-toggle .tri::before { content: "\25B8"; font-size: 1.2em; margin-right: 0.1em; } /* ▸ closed */
-.expand-toggle[aria-expanded="true"] .tri::before { content: "\25BE"; } /* ▾ open */
-/* Expanded body: plain prose under the title */
-.expand { margin: 0.25rem 0 0; }
+.gh:hover { background: none; } /* no yellow box, as on the arrows */
+.gh:hover::before { background: var(--mark); }
+h3:has(> .gh) + p { margin-left: calc(var(--lead) + var(--gap)); } /* description lines up with the title text, past the icon */
+/* Separator dot between two links: {% <sep> %}{% </sep> %} */
+.sep { display: inline-block; width: 0.22em; height: 0.22em; margin: 0 0.35em; border-radius: 50%; background: currentColor; vertical-align: 0.25em; }
+
+/* Expandable title. The toggle is last in the markup (its body follows) but is drawn first: a blue
+   circle with a plus (closed) or minus (open) cut out of it, then the title, then its links.
+   The label is only for screen readers. The whole title is clickable (script in index.html). */
+h3:has(> .expand-toggle) { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: var(--gap); cursor: pointer; margin-bottom: 0.35rem; }
+/* Weight: a collapsed title is regular; the one that is open is bold, so the weight shows where you are. */
+h3:has(> .expand-toggle) { font-weight: 400; }
+h3:has(> .expand-toggle[aria-expanded="true"]) { font-weight: 650; }
+.expand-toggle { order: -1; font-size: 1em; } /* the h3's size, so the arrow and the body indent share one unit */
+.expand-toggle .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.expand-toggle .tri { display: inline-block; width: var(--lead); text-align: center; line-height: 1; } /* same column as the seal */
+.expand-toggle .tri::before { content: "\25B8"; color: var(--accent); font-size: 1.5em; } /* ▸ closed */
+.expand-toggle[aria-expanded="true"] .tri::before { content: "\25BE"; }                      /* ▾ open */
+.expand-toggle:hover { background: none; } /* no lime highlight on the arrow */
+/* Hover: seals, arrows and Github icons turn yellow (no yellow box, unlike text links) */
+h3:has(> .expand-toggle):hover .tri::before { color: var(--mark); }
+.expand { margin: 0 0 0.9rem calc(var(--lead) + var(--gap)); } /* body lines up with the title text, past the arrow */
 .expand[hidden] { display: none; }
+/* First line of a body when it is only an institution / venue: grey, not italic */
+.expand > p:first-child:has(> em:only-child) { color: var(--muted); font-size: 0.95rem; }
+.expand > p:first-child > em:only-child { font-style: normal; }
+h2#software ~ h3:not(:has(> .expand-toggle)) { padding-left: 0; }
+
+/* Resume: a list whose bullets are the flags, in the same column as the seal and the arrows;
+   the text starts on the shared left edge. */
+h2#resume ~ ul { list-style: none; padding-left: calc(var(--lead) + var(--gap)); margin: 0.4rem 0 1rem; }
+h2#resume ~ ul > li { position: relative; margin-bottom: 0.5em; }
+.flag { position: absolute; right: 100%; margin-right: var(--gap); width: var(--lead); text-align: center; line-height: inherit; }
+
+/* Seals turn yellow when their title is hovered. The title shrinks to its text so only that area counts. */
+h2 { width: fit-content; }
+h2:hover::before, #mast .name:hover::before { background-image: url("seal_yellow.svg"); }

@@ -1,0 +1,132 @@
+/* Colours: dark only. */
+:root {
+  color-scheme: dark;
+  --bg:      #0f121a;
+  --ink:     #e7eaf3;
+  --muted:   #8a93aa;
+  --faint:   #252b3a;  /* table rules */
+  --code-bg: #181d29;
+  --accent:  #6f97ff;  /* resume blue: links, marks, quote bar */
+  --mark: #ffd60a;
+  --mark-ink: #0f121a;
+  --mono: ui-monospace, "JetBrains Mono", "SF Mono", "Menlo", "Consolas", monospace;
+}
+
+/* Body font: Atkinson Hyperlegible Next, served from this site (OFL licence next to the files).
+   One file per style, every weight from 200 to 800. Latin only: Greek, arrows and emoji use the system font. */
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("atkinson-hyperlegible-next-latin-normal.woff2") format("woff2"); }
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-style: italic; font-weight: 200 800; font-display: swap; src: url("atkinson-hyperlegible-next-latin-italic.woff2") format("woff2"); }
+
+/* Page */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  max-width: 45em;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.65;
+}
+
+/* Text */
+h1, h2, h3, h4 { line-height: 1.25; font-weight: 700; letter-spacing: -0.01em; }
+h2, h3, h4 { scroll-margin-top: 1rem; } /* a jump to a section leaves some air above it */
+h1 { font-size: 1.55rem; margin: 0 0 0.4rem; }
+h2 { font-size: 1.3rem; margin: 2.2rem 0 0.6rem; }
+h3 { font-size: 1.1rem; margin: 1.6rem 0 0.5rem; }
+p, ul, ol, blockquote, pre, figure, table { margin: 0 0 1em; }
+strong { font-weight: 650; }
+mark { background: var(--mark); color: var(--mark-ink); padding: 0 0.15em; }
+::selection { background: color-mix(in srgb, var(--mark) 99%, transparent); color: var(--mark-ink); } /* 99%: WebKit dims a fully opaque selection colour */
+a { color: var(--accent); text-decoration-thickness: 0.12em; text-underline-offset: 0.18em; }
+a:hover { background: var(--mark); color: var(--mark-ink); text-decoration: none; }
+blockquote { margin-left: 0; padding-left: 1em; border-left: 3px solid var(--accent); color: var(--muted); }
+img, video { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 6px; }
+figure { text-align: center; }
+figcaption { margin-top: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+hr { border: 0; margin: 2.5rem 0; text-align: center; }
+hr::after { content: "* * *"; color: var(--muted); }
+table { border-collapse: collapse; font-size: 0.95rem; }
+th, td { padding: 0.35em 0.8em; border-bottom: 1px solid var(--faint); text-align: left; }
+th { font-size: 0.9em; }
+
+/* Code. Zola (Giallo) colours the tokens inline; only the box is set here. */
+code { font-family: var(--mono); font-size: 0.88em; }
+:not(pre) > code { background: var(--code-bg); padding: 0.1em 0.35em; border-radius: 4px; }
+pre { padding: 1em 1.1em; overflow-x: auto; border-radius: 8px; line-height: 1.5; background: var(--code-bg) !important; }
+pre span { text-decoration: none !important; } /* the GitHub themes underline parameters */
+.giallo-l { display: inline-block; min-height: 1lh; width: 100%; } /* one code line */
+.giallo-ln { display: inline-block; user-select: none; margin-right: 0.4em; padding: 0.4em; min-width: 3ch; text-align: right; opacity: 0.8; } /* its line number */
+
+/* Math (KaTeX loads after this file, hence "article") */
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+article .katex { font-size: 1.09em; }
+
+/* Masthead: /home/polybulle on the left, links on the right */
+#mast { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3.5rem; font-size: 0.95rem; }
+#mast a { text-decoration: none; }
+#mast .name { font-family: var(--mono); font-size: 1.6rem; color: var(--ink); background: none; }
+#mast .name::before { content: "/home/"; color: var(--accent); }
+#mast nav a { margin-left: 1.4em; color: var(--muted); }
+#mast nav a:hover { color: var(--mark-ink); } /* beats the rule above: dark ink on the yellow box */
+
+/* Post list */
+.index { list-style: none; padding: 0; }
+.index li { margin-bottom: 1.6rem; }
+.index time { display: block; font-size: 0.8rem; color: var(--muted); }
+.index a { font-size: 1.2rem; font-weight: 600; text-decoration: none; }
+.index p { margin: 0.15rem 0 0; }
+.index p, .index .empty { color: var(--muted); }
+
+/* Post: byline, and the "#" link that hangs left of each section title */
+.meta { margin: 0 0 2.2rem; font-size: 0.82rem; color: var(--muted); }
+.zola-anchor { position: absolute; transform: translateX(calc(-100% - 0.6rem)); font-weight: 400; text-decoration: none; }
+@media (width < 44em) { /* narrow window: no left margin to hang in, so the "#" sits inline */
+  .zola-anchor { position: static; transform: none; margin-right: 0.6rem; }
+}
+
+/* Footnotes. Without JavaScript (and in reader mode): Zola's list at the bottom of the post.
+   With notes.js: the list is hidden and each note is copied into an <aside class="sidenote">
+   right after its reference. Narrow window: a popover. Wide window: a note in the right margin.
+   notes.js tells the two apart by `position: absolute`, so keep that on the popover only. */
+.footnote-reference { line-height: 0; }
+.footnote-reference a { padding: 0 0.15em; border-radius: 3px; font-size: 0.72em; font-weight: 700; text-decoration: none; }
+.footnotes { font-size: 0.9rem; }
+.footnotes ol { padding-left: 1.4em; }
+.footnotes li:target { background: var(--code-bg); }
+.sn .footnotes, .sn hr:has(+ .footnotes) { display: none; }
+
+article { position: relative; }
+.sidenote { font-size: 1rem; line-height: 1.5; }
+.sidenote p { display: inline; margin: 0 0 0.5em; }
+.sidenote p + p { display: block; margin-top: 0.5em; }
+.sn-n { margin-right: 0.5em; font-size: 1rem; font-weight: 700; color: var(--accent); }
+
+@media (width < 72em) {
+  .sidenote {
+    display: none;
+    position: absolute; /* notes.js sets top and left */
+    z-index: 10;
+    width: max-content;
+    max-width: min(100%, 24rem);
+    max-height: 50vh;
+    overflow-y: auto;
+    padding: 0.6em 0.85em;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    border-radius: 4px;
+    box-shadow: 2px 2px 0 var(--accent);
+  }
+  .sidenote.open { display: block; }
+}
+@media (width >= 72em) {
+  body { max-width: 58em; }
+  #mast { max-width: 36em; }
+  article > *, .index { max-width: 45em; }
+  .sidenote { float: right; clear: right; width: 16rem; margin: 0.3em -18.5rem 0.8em 0; color: var(--muted); } /* -(width + gap): out of the text, into the margin */
+  .sidenote.flash { animation: flash 1.2s ease-out; } /* clicking a reference flashes its note */
+}
+@keyframes flash { from { background: var(--mark); color: var(--mark-ink); } }

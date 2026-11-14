@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ section.title }}</title>
 <link rel="me" href="https://mathstodon.xyz/@polybulle">
+<link rel="stylesheet" type="text/css" href="{{ get_url(path='style.css', cachebust=true) | safe }}">
 <link rel="stylesheet" type="text/css" href="{{ get_url(path='stylesheet.css', cachebust=true) | safe }}">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="32x32">
@@ -13,27 +14,18 @@
 </head>
 <body>
 
-<h1>{{ section.title }}</h1>
-
-<nav id="toc">
-<ul>
-{% for h in section.toc %}
-<li><a href="#{{ h.id }}">{{ h.title }}</a></li>
+<header id="mast">
+<h1 class="name">{{ section.title }}</h1>
+<nav>
+{% for l in config.extra.links %}
+<a href="{{ l.href }}">{{ l.text }}</a>
 {% endfor %}
-</ul>
 </nav>
+</header>
 
-{#- The intro is everything before the first h2. Account links (config.toml [extra.links]) go
-    right after it, as one quiet row, before the first section. -#}
 {%- set parts = section.content | split(pat="<h2") -%}
 {{ parts | first | safe }}
-<address id="links">
-<ul>
-{% for l in config.extra.links %}
-<li><a href="{{ l.href }}">{{ l.text }}</a></li>
-{% endfor %}
-</ul>
-</address>
+
 {% for p in parts %}{% if not loop.first %}<h2{{ p | safe }}{% endif %}{% endfor %}
 
 <script>
@@ -44,8 +36,15 @@ document.querySelectorAll(".expand-toggle").forEach(function (a) {
     box.hidden = !box.hidden;
     a.setAttribute("aria-expanded", String(!box.hidden));
   });
+  // The whole title is the click target, except its own links (PDF, Manuscript)
+  var h = a.closest("h3");
+  if (h) h.addEventListener("click", function (e) {
+    if (!e.target.closest("a")) a.click();
+  });
 });
 </script>
 
+<script data-goatcounter="https://hectorsuzanne.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
